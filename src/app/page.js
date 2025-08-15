@@ -12,14 +12,14 @@ const testimonials = [
 ];
 
 const services = [
-    { icon: 'fas fa-edit', title: 'CRM Management', description: 'Unlock the Power of Vector Art with Our Studio! From overdue tasks to urgent needs, our expert artists are at your service.' },
-    { icon: 'fas fa-paint-brush', title: 'Embroidery Digitizing', description: 'Elevate Your Embroidery Game! Trust our skilled team for top-tier Embroidery Digitizing. We are masters of the craft.' },
-    { icon: 'fas fa-image', title: 'Digital Image Editing', description: 'Transform Your Visuals with Precision! Elevate your brand with our tailored Digital Image Editing services for web and print perfection.' },
-    { icon: 'fas fa-tools', title: 'Custom Services', description: 'Have a unique project in mind? Our team is flexible and ready to create custom solutions to fit your needs.' },
-    { icon: 'fas fa-cogs', title: 'Web Development', description: 'We build modern, responsive, and high-performance websites and web applications from front-end to back-end.' },
-    { icon: 'fab fa-wordpress', title: 'WordPress Solutions', description: 'Leverage the power of WordPress with our comprehensive solutions, including custom theme and plugin development.' },
-    { icon: 'fas fa-database', title: 'Data Processing', description: 'Efficient and accurate data processing services to help you manage, organize, and utilize your valuable information.' },
-    { icon: 'fas fa-user-tie', title: 'Virtual Assistant', description: 'Our professional virtual assistants can handle your administrative tasks, allowing you to focus on growing your business.' }
+    { icon: 'fas fa-edit', title: 'CRM Management', description: 'Unlock the Power of Vector Art with Our Studio! From overdue tasks to urgent needs, our expert artists are at your service.', link: '/crm' },
+    { icon: 'fas fa-paint-brush', title: 'Embroidery Digitizing', description: 'Elevate Your Embroidery Game! Trust our skilled team for top-tier Embroidery Digitizing. We are masters of the craft.', link: '/embroidery' },
+    { icon: 'fas fa-image', title: 'Digital Image Editing', description: 'Transform Your Visuals with Precision! Elevate your brand with our tailored Digital Image Editing services for web and print perfection.', link: '/digital-editing' },
+    { icon: 'fas fa-tools', title: 'Custom Services', description: 'Have a unique project in mind? Our team is flexible and ready to create custom solutions to fit your needs.', link: '/custom-services' },
+    { icon: 'fas fa-cogs', title: 'Web Development', description: 'We build modern, responsive, and high-performance websites and web applications from front-end to back-end.', link: '/web-development' },
+    { icon: 'fab fa-wordpress', title: 'WordPress Solutions', description: 'Leverage the power of WordPress with our comprehensive solutions, including custom theme and plugin development.', link: '/wordpress-solutions' },
+    { icon: 'fas fa-database', title: 'Data Processing', description: 'Efficient and accurate data processing services to help you manage, organize, and utilize your valuable information.', link: '/data-processing' },
+    { icon: 'fas fa-user-tie', title: 'Virtual Assistant', description: 'Our professional virtual assistants can handle your administrative tasks, allowing you to focus on growing your business.', link: '/virtual-assistant' }
 ];
 
 // --- Main Components ---
@@ -30,16 +30,16 @@ const Header = () => {
     return (
         <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
             <div className="container mx-auto flex justify-between items-center p-4">
-                <a href="#" className="flex items-center gap-3 text-purple-400">
+                <a href="/" className="flex items-center gap-3 text-purple-400">
                     <img src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" alt="VS Logo" className="h-14 w-14 rounded-full" />
                     <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
                 </a>
                 <div className="hidden md:flex items-center gap-8">
-                    <a href="#" className="text-gray-300 hover:text-purple-400 transition-colors">Home</a>
-                    <a href="./services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</a>
-                    <a href="#" className="text-gray-300 hover:text-purple-400 transition-colors">About</a>
-                    <a href="#" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</a>
-                    <a href="./join" className="text-gray-300 hover:text-purple-400 transition-colors">Opportunities</a>
+                    <a href="/" className="text-purple-400 transition-colors">Home</a>
+                    <a href="/services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</a>
+                    <a href="/about" className="text-gray-300 hover:text-purple-400 transition-colors">About</a>
+                    <a href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</a>
+                    <a href="/join" className="text-gray-300 hover:text-purple-400 transition-colors">Opportunities</a>
                 </div>
                 <div className="hidden lg:flex flex-col items-end">
                     <div>
@@ -47,10 +47,10 @@ const Header = () => {
                         <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
                     </div>
                     <div className="flex space-x-4 mt-2 text-gray-400">
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-instagram"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-google"></i></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></a>
+                        <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-google"></i></a>
                     </div>
                 </div>
                 <div className="md:hidden">
@@ -61,11 +61,11 @@ const Header = () => {
             </div>
             {isMenuOpen && (
                 <div className="md:hidden bg-gray-900 bg-opacity-90">
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Home</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Services</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">About</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Contact</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Opportunities</a>
+                    <a href="/" className="block py-3 px-4 text-sm hover:bg-gray-700">Home</a>
+                    <a href="/services" className="block py-3 px-4 text-sm hover:bg-gray-700">Services</a>
+                    <a href="/about" className="block py-3 px-4 text-sm hover:bg-gray-700">About</a>
+                    <a href="/contact" className="block py-3 px-4 text-sm hover:bg-gray-700">Contact</a>
+                    <a href="/join" className="block py-3 px-4 text-sm hover:bg-gray-700">Opportunities</a>
                 </div>
             )}
         </nav>
@@ -211,7 +211,7 @@ const Services = () => (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {services.map((service, index) => (
                         <div key={index} className="bg-transparent p-6 rounded-lg border border-gray-800 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300">
-                            <a href="#">
+                            <a href={service.link}>
                                 <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4">
                                     <i className={`${service.icon} text-white text-2xl`}></i>
                                 </div>
@@ -237,16 +237,16 @@ const Footer = () => (
                     </div>
                     <p className="text-sm">Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.</p>
                     <div className="flex space-x-4 mt-4">
-                        <a href="#" className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="hover:text-white"><i className="fab fa-instagram"></i></a>
-                        <a href="#" className="hover:text-white"><i className="fab fa-linkedin-in"></i></a>
-                        <a href="#" className="hover:text-white"><i className="fab fa-skype"></i></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.skype.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-skype"></i></a>
                     </div>
                 </div>
                 <div>
                     <h4 className="font-bold text-white mb-4">Services</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-white">Vector Artwork</a></li>
+                        <li><a href="./crm" className="hover:text-white">CRM Management</a></li>
                         <li><a href="#" className="hover:text-white">Embroidery Digitizing</a></li>
                         <li><a href="#" className="hover:text-white">Digital Image Editing</a></li>
                         <li><a href="#" className="hover:text-white">Data Processing</a></li>
@@ -256,18 +256,18 @@ const Footer = () => (
                 <div>
                     <h4 className="font-bold text-white mb-4">Quick Links</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-white">Home</a></li>
-                        <li><a href="#" className="hover:text-white">Services</a></li>
-                        <li><a href="#" className="hover:text-white">About</a></li>
-                        <li><a href="#" className="hover:text-white">Contact</a></li>
+                        <li><a href="/" className="hover:text-white">Home</a></li>
+                        <li><a href="/services" className="hover:text-white">Services</a></li>
+                        <li><a href="/about" className="hover:text-white">About</a></li>
+                        <li><a href="/contact" className="hover:text-white">Contact</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 className="font-bold text-white mb-4">Legal</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-white">Claim</a></li>
-                        <li><a href="#" className="hover:text-white">Privacy</a></li>
-                        <li><a href="#" className="hover:text-white">Terms</a></li>
+                        <li><a href="/claim" className="hover:text-white">Claim</a></li>
+                        <li><a href="/policy" className="hover:text-white">Privacy</a></li>
+                        <li><a href="/terms" className="hover:text-white">Terms</a></li>
                     </ul>
                 </div>
             </div>

@@ -141,6 +141,25 @@ export default function JoinPage() {
     const [message, setMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = "https://www.google.com/recaptcha/api.js";
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+
+        return () => {
+            // Clean up the script when the component unmounts
+            const scripts = Array.from(document.getElementsByTagName('script'));
+            scripts.forEach(s => {
+                if (s.src === "https://www.google.com/recaptcha/api.js") {
+                    s.remove();
+                }
+            });
+        };
+    }, []);
+
+
     const handleFileChange = (e) => {
         if (e.target.files.length > 0) {
             setFileName(e.target.files[0].name);
