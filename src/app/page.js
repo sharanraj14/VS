@@ -75,10 +75,21 @@ const Header = () => {
 const HeroCarousel = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slides = [
-        { type: 'image', src: 'https://placehold.co/1920x1080/1A1A1A/FFFFFF?text=Modern+Solutions' },
-        { type: 'image', src: 'https://placehold.co/1920x1080/1A1A1A/C084FC?text=Creative+Designs' },
-        { type: 'text', content: 'Unlock New Opportunities With Us Today.' },
-        { type: 'text', content: 'Explore Our Services to See What We Can Do.' }
+        { 
+            bg: 'https://placehold.co/1920x1080/1A1A1A/FFFFFF?text=Modern+Solutions',
+            title: 'Modern Solutions for a Digital World',
+            subtitle: 'We provide the tools and talent to help you succeed.'
+        },
+        { 
+            bg: 'https://placehold.co/1920x1080/1A1A1A/C084FC?text=Creative+Designs',
+            title: 'Creative Designs, Powerful Results',
+            subtitle: 'From concept to creation, we bring your vision to life.'
+        },
+        { 
+            bg: 'https://placehold.co/1920x1080/1A1A1A/3B82F6?text=Global+Talent',
+            title: 'Unlock a World of Talent',
+            subtitle: 'Access a global network of skilled professionals ready to help you grow.'
+        }
     ];
 
     const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -91,18 +102,16 @@ const HeroCarousel = () => {
 
     return (
         <header className="relative text-white py-8 text-center">
-            <div className="relative w-full h-[75vh] mx-auto overflow-hidden bg-black rounded-xl border border-gray-800 hover:shadow-2xl hover:shadow-purple-500/20 transition-shadow duration-300">
-                <div className="flex h-full transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                    {slides.map((slide, index) => (
-                        <div key={index} className="min-w-full h-full flex justify-center items-center p-6">
-                            {slide.type === 'image' ? (
-                                <img src={slide.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-                            ) : (
-                                <h1 className="text-4xl sm:text-6xl font-extrabold max-w-3xl">{slide.content}</h1>
-                            )}
+            <div className="relative w-full h-[75vh] mx-auto overflow-hidden bg-black rounded-xl border border-gray-800">
+                {slides.map((slide, index) => (
+                    <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
+                        <img src={slide.bg} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-6">
+                            <h1 className={`text-4xl sm:text-6xl font-extrabold max-w-3xl transition-transform duration-1000 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>{slide.title}</h1>
+                            <p className={`text-lg text-gray-300 mt-4 max-w-2xl transition-transform duration-1000 delay-200 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>{slide.subtitle}</p>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
                 <button onClick={prevSlide} className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-10"><i className="fas fa-chevron-left"></i></button>
                 <button onClick={nextSlide} className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-10"><i className="fas fa-chevron-right"></i></button>
             </div>
@@ -110,9 +119,6 @@ const HeroCarousel = () => {
                 {slides.map((_, index) => (
                     <button key={index} onClick={() => setCurrentSlide(index)} className={`h-3 w-3 mx-1 rounded-full ${currentSlide === index ? 'bg-white' : 'bg-gray-500'}`}></button>
                 ))}
-            </div>
-            <div className="mt-8">
-                <button className="bg-white text-purple-600 font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-gray-200 transition-colors">Get Started</button>
             </div>
         </header>
     );
@@ -212,7 +218,7 @@ const Services = () => (
                     {services.map((service, index) => (
                         <div key={index} className="bg-transparent p-6 rounded-lg border border-gray-800 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300">
                             <a href={service.link}>
-                                <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4">
+                                <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4 transition-transform hover:scale-110">
                                     <i className={`${service.icon} text-white text-2xl`}></i>
                                 </div>
                                 <h4 className="text-xl font-bold text-white mb-2">{service.title}</h4>
@@ -246,7 +252,7 @@ const Footer = () => (
                 <div>
                     <h4 className="font-bold text-white mb-4">Services</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="./crm" className="hover:text-white">CRM Management</a></li>
+                        <li><a href="/crm" className="hover:text-white">CRM Management</a></li>
                         <li><a href="#" className="hover:text-white">Embroidery Digitizing</a></li>
                         <li><a href="#" className="hover:text-white">Digital Image Editing</a></li>
                         <li><a href="#" className="hover:text-white">Data Processing</a></li>
@@ -266,7 +272,7 @@ const Footer = () => (
                     <h4 className="font-bold text-white mb-4">Legal</h4>
                     <ul className="space-y-2 text-sm">
                         <li><a href="/claim" className="hover:text-white">Claim</a></li>
-                        <li><a href="/policy" className="hover:text-white">Privacy</a></li>
+                        <li><a href="/policy" className="hover:text-white">Policies</a></li>
                         <li><a href="/terms" className="hover:text-white">Terms</a></li>
                     </ul>
                 </div>
