@@ -137,86 +137,85 @@ const Footer = () => (
 );
 
 
-export default function ClaimPage() {
+export default function VirtualAssistancePage() {
   return (
-    <div className="min-h-screen">
-      <style jsx="true" global="true">{`
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-        
-        body {
-          font-family: 'Inter', sans-serif;
-          background-color: #0A0A0A;
-          color: #f3f4f6;
-          overflow-x: hidden;
-        }
+    <div>
+        <style jsx="true" global="true">{`
+            @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+            
+            body {
+                font-family: 'Inter', sans-serif;
+                background-color: #0A0A0A;
+                color: #f3f4f6;
+                overflow-x: hidden;
+            }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(at 80% 10%, hsla(280, 80%, 50%, 0.2) 0px, transparent 50%), 
-                        radial-gradient(at 20% 90%, hsla(260, 90%, 50%, 0.2) 0px, transparent 50%);
-            animation: move-gradient 20s ease-in-out infinite;
-        }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                background: radial-gradient(at 75% 0%, rgba(200, 0, 160, 0.3) 0%, transparent 50%), 
+                            radial-gradient(at 0% 100%, rgba(100, 0, 200, 0.3) 0%, transparent 50%),
+                            radial-gradient(at 100% 100%, rgba(200, 0, 160, 0.3) 0%, transparent 50%);
+                animation: move-gradient 40s ease-in-out infinite;
+            }
 
-        @keyframes move-gradient {
-            0%, 100% { background-position: 0% 50%, 100% 50%; }
-            50% { background-position: 100% 50%, 0% 50%; }
-        }
-        
-        .policy-section {
-            background-color: rgba(23, 23, 23, 0.4);
-            padding: 2rem;
-            border-radius: 0.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .policy-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #c084fc;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        .policy-content p {
-            line-height: 1.75;
-        }
-      `}</style>
-      <Header />
-      <main className="container mx-auto px-4 py-8">
-        <RevealOnScroll>
-            <section className="policy-section">
-                <h1 className="section-title">Claims & Indemnification</h1>
-                <div className="policy-content">
-                    <h3>1. Scope of Services & Limitations</h3>
-                    <p>Virtual Switch will provide virtual assistance services as agreed in the proposal or onboarding document. Any additional tasks or services outside the agreed scope will require prior approval and may incur additional fees. Virtual Switch is not responsible for tasks that require licensed professionals (e.g., legal, medical, or financial advisory services) unless expressly agreed in writing.</p>
-
-                    <h3>2. Performance & Quality Disclaimer</h3>
-                    <p>While Virtual Switch strives to meet client requirements and deadlines, the company is not liable for delays or outcomes caused by client-side factors such as delayed feedback, unclear instructions, or lack of necessary information.</p>
-
-                    <h3>3. Intellectual Property Rights</h3>
-                    <p>Upon full payment, any work product created for the client under this agreement becomes the client’s property. Virtual Switch retains the right to use non-confidential, non-identifying portions of the work for portfolio or marketing purposes unless otherwise agreed.</p>
-
-                    <h3>4. Force Majeure Clause</h3>
-                    <p>Virtual Switch will not be held liable for failure to perform services due to circumstances beyond its control, including but not limited to natural disasters, government restrictions, internet outages, strikes, or pandemics.</p>
-
-                    <h3>5. Communication Channels & Response Times</h3>
-                    <p>All communication should occur via the designated official channels (e.g., email, project management tool, or agreed messaging platform). Virtual Switch aims to respond within 24 business hours. Urgent requests will be addressed subject to team availability.</p>
-                    
-                    <h3>6. Refund Policy</h3>
-                    <p>Fees paid are non-refundable except where required by law or mutually agreed upon in writing.</p>
-
-                    <h3>7. Indemnification</h3>
-                    <p>The client shall defend, indemnify, and hold harmless Virtual Switch and its subsidiaries and affiliates from and against any and all losses, claims, costs, damages, fines, or other liabilities of any kind, including reasonable attorneys' fees, arising out of or related to the resource's misconduct or negligent acts or omissions in connection with the services to be provided under this program or any prior program.</p>
+            @keyframes move-gradient {
+                0% { background-position: 0% 50%, 100% 50%, 50% 0%; }
+                50% { background-position: 100% 50%, 0% 50%, 50% 100%; }
+                100% { background-position: 0% 50%, 100% 50%, 50% 0%; }
+            }
+        `}</style>
+        <Header />
+        <main className="container mx-auto px-4 py-16">
+            <RevealOnScroll>
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl lg:text-5xl font-extrabold text-purple-400">Virtual Assistance Services</h1>
+                    <p className="text-lg text-gray-300 mt-4 max-w-3xl mx-auto">Delegate your tasks, reclaim your time, and focus on what matters most with a dedicated virtual assistant.</p>
                 </div>
-            </section>
-        </RevealOnScroll>
-      </main>
-      <Footer />
+            </RevealOnScroll>
+
+            <div className="space-y-16">
+                 {/* Section 1 */}
+                <RevealOnScroll>
+                     <div className="flex flex-col lg:flex-row items-center gap-12">
+                        <div className="lg:w-1/2">
+                            <h2 className="text-3xl font-bold text-white mb-4">Comprehensive Administrative Support</h2>
+                            <p className="text-gray-400 leading-relaxed">Our virtual assistants handle all your administrative needs, from managing schedules and appointments to handling email correspondence and data entry. We keep your operations organized and efficient, freeing you to focus on strategic goals.</p>
+                        </div>
+                        <div className="lg:w-1/2 relative min-h-[350px]">
+                            <div className="absolute top-0 left-0 w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 transform -rotate-3"></div>
+                            <div className="absolute bottom-0 right-0 w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 transform rotate-3">
+                                <img src="https://placehold.co/600x400/1E293B/FFFFFF?text=Admin+Support" alt="Administrative Support" className="w-full h-full object-cover rounded-lg" />
+                            </div>
+                        </div>
+                    </div>
+                </RevealOnScroll>
+
+                {/* Section 2 */}
+                <RevealOnScroll>
+                    <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
+                        <div className="lg:w-1/2">
+                            <h2 className="text-3xl font-bold text-white mb-4">Personalized Executive Assistance</h2>
+                            <p className="text-gray-400 leading-relaxed">Get high-level support for your executive tasks. Our VAs can assist with travel arrangements, preparing reports and presentations, and managing your personal and professional commitments, allowing you to be more productive and effective in your role.</p>
+                        </div>
+                         <div className="lg:w-1/2 relative min-h-[350px]">
+                            <div className="absolute top-0 right-0 w-5/6 h-5/6 bg-blue-500 rounded-xl z-0 transform rotate-3"></div>
+                            <div className="absolute bottom-0 left-0 w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 transform -rotate-3">
+                                <img src="https://placehold.co/600x400/1E293B/FFFFFF?text=Executive+Assistance" alt="Executive Assistance" className="w-full h-full object-cover rounded-lg" />
+                            </div>
+                        </div>
+                    </div>
+                </RevealOnScroll>
+            </div>
+        </main>
+        <Footer />
     </div>
   );
 }
+
