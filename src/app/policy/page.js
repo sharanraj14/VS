@@ -3,116 +3,104 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Head from "next/head";
+import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 
-// -------- Header --------
+// ---------------- HEADER ----------------
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
+    <nav className="sticky top-0 z-50 bg-black/60 backdrop-blur-md border-b border-gray-800">
       <div className="container mx-auto flex justify-between items-center p-4">
+
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-3 text-purple-400">
           <Image
             src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS"
             alt="VS Logo"
             width={56}
             height={56}
-            className="h-14 w-14 rounded-full"
+            className="rounded-full"
           />
           <span className="text-2xl font-extrabold text-white">
             Virtual Switch
           </span>
         </Link>
 
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="text-gray-300 hover:text-purple-400">
-            Home
-          </Link>
-          <Link href="/services" className="text-gray-300 hover:text-purple-400">
-            Services
-          </Link>
-          <Link href="/about" className="text-gray-300 hover:text-purple-400">
-            About
-          </Link>
-          <Link href="/contact" className="text-gray-300 hover:text-purple-400">
-            Contact
-          </Link>
-          <Link href="/join" className="text-gray-300 hover:text-purple-400">
-            Opportunities
-          </Link>
+          {["Home", "Services", "About", "Contact", "Opportunities"].map(
+            (item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
+                className="text-gray-300 hover:text-purple-400 transition"
+              >
+                {item}
+              </Link>
+            )
+          )}
         </div>
 
+        {/* Right Section */}
         <div className="hidden lg:flex flex-col items-end">
-          <div>
-            <span className="text-sm text-gray-400">Toll Free</span>
-            <span className="font-bold text-purple-400 ml-2">
-              +1(800) 259-1090
-            </span>
+          <div className="flex items-center gap-3 text-sm">
+            <span className="text-gray-400">Toll Free</span>
+            <span className="font-bold text-purple-400">+1 (800) 259-1090</span>
           </div>
+
           <div className="flex space-x-4 mt-2 text-gray-400">
-            <Link href="#" className="hover:text-purple-400">
-              <i className="fab fa-facebook-f" />
-            </Link>
-            <Link href="#" className="hover:text-purple-400">
-              <i className="fab fa-instagram" />
-            </Link>
-            <Link href="#" className="hover:text-purple-400">
-              <i className="fab fa-linkedin-in" />
-            </Link>
-            <Link href="#" className="hover:text-purple-400">
-              <i className="fab fa-google" />
-            </Link>
+            <Link href="#" className="hover:text-purple-400"><Facebook size={18} /></Link>
+            <Link href="#" className="hover:text-purple-400"><Instagram size={18} /></Link>
+            <Link href="#" className="hover:text-purple-400"><Linkedin size={18} /></Link>
+            <Link href="#" className="hover:text-purple-400"><Mail size={18} /></Link>
           </div>
         </div>
 
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden text-white"
         >
-          <i className="fas fa-bars text-2xl" />
+          <svg width="28" height="28" fill="none" stroke="currentColor">
+            <path strokeWidth="2" d="M4 7h20M4 14h20M4 21h20" />
+          </svg>
         </button>
       </div>
 
+      {/* Mobile Dropdown */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-900">
-          <Link href="/" className="block py-3 px-4 text-sm hover:bg-gray-700">
-            Home
-          </Link>
-          <Link href="/services" className="block py-3 px-4 text-sm hover:bg-gray-700">
-            Services
-          </Link>
-          <Link href="/about" className="block py-3 px-4 text-sm hover:bg-gray-700">
-            About
-          </Link>
-          <Link href="/contact" className="block py-3 px-4 text-sm hover:bg-gray-700">
-            Contact
-          </Link>
-          <Link href="/join" className="block py-3 px-4 text-sm hover:bg-gray-700">
-            Opportunities
-          </Link>
+        <div className="md:hidden bg-gray-900 border-t border-gray-800">
+          {["Home", "Services", "About", "Contact", "Opportunities"].map(
+            (item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
+                className="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 transition"
+              >
+                {item}
+              </Link>
+            )
+          )}
         </div>
       )}
     </nav>
   );
 };
 
-// -------- Reveal Animation --------
+// ---------------- REVEAL ANIMATION ----------------
 const RevealOnScroll = ({ children }) => {
   const ref = useRef(null);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       ([entry]) => setShow(entry.isIntersecting),
       { threshold: 0.1 }
     );
+    if (ref.current) obs.observe(ref.current);
 
-    if (ref.current) observer.observe(ref.current);
-
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
+    return () => ref.current && obs.unobserve(ref.current);
   }, []);
 
   return (
@@ -127,12 +115,13 @@ const RevealOnScroll = ({ children }) => {
   );
 };
 
-// -------- Footer --------
+// ---------------- FOOTER ----------------
 const Footer = () => (
   <RevealOnScroll>
     <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16">
 
+        {/* Brand */}
         <div>
           <div className="flex items-center gap-3 mb-4">
             <Image
@@ -140,29 +129,23 @@ const Footer = () => (
               alt="Logo"
               width={48}
               height={48}
-              className="h-12 w-12 rounded-full"
+              className="rounded-full"
             />
             <span className="text-xl font-bold text-white">Virtual Switch</span>
           </div>
         </div>
 
+        {/* About */}
         <div>
           <p className="text-sm max-w-xs mb-4">
             Your industry experts, specializing in management and outsourcing.
           </p>
+
           <div className="flex space-x-4">
-            <Link href="#" className="hover:text-white">
-              <i className="fab fa-facebook-f" />
-            </Link>
-            <Link href="#" className="hover:text-white">
-              <i className="fab fa-instagram" />
-            </Link>
-            <Link href="#" className="hover:text-white">
-              <i className="fab fa-linkedin-in" />
-            </Link>
-            <Link href="#" className="hover:text-white">
-              <i className="fab fa-skype" />
-            </Link>
+            <Link href="#" className="hover:text-white"><Facebook size={18} /></Link>
+            <Link href="#" className="hover:text-white"><Instagram size={18} /></Link>
+            <Link href="#" className="hover:text-white"><Linkedin size={18} /></Link>
+            <Link href="#" className="hover:text-white"><Phone size={18} /></Link>
           </div>
         </div>
 
@@ -207,23 +190,10 @@ const Footer = () => (
   </RevealOnScroll>
 );
 
-// -------- Policy Page --------
+// ---------------- PAGE ----------------
 export default function PolicyPage() {
   return (
     <div className="min-h-screen bg-black text-white">
-      <Head>
-        <title>Policy | Virtual Switch</title>
-        <meta name="description" content="Virtual Switch Policy Page" />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-
       <Header />
 
       <main className="container mx-auto px-4 py-16">
@@ -232,7 +202,8 @@ export default function PolicyPage() {
             Policy
           </h1>
           <p className="max-w-3xl mx-auto text-gray-300 text-center leading-relaxed">
-            Welcome to our Policy page. Here, we explain our privacy practices, user guidelines, and legal terms to ensure transparency and trust.
+            Welcome to our Policy page. Here, we explain our privacy practices,
+            user guidelines, and legal terms to ensure transparency and trust.
           </p>
         </RevealOnScroll>
       </main>
