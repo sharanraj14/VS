@@ -1,17 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link"; // FIXED
-import RevealOnScroll from "../components/RevealOnScroll";
+import Link from "next/link";
 
 export default function VirtualAssistancePage() {
   const imageWidth = 600;
   const imageHeight = 400;
 
+  // --- RevealOnScroll Component (built-in) ---
+  const RevealOnScroll = ({ children }) => {
+    const ref = useRef(null);
+    const [show, setShow] = useState(false);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => setShow(entry.isIntersecting),
+        { threshold: 0.1 }
+      );
+
+      if (ref.current) observer.observe(ref.current);
+      return () => ref.current && observer.unobserve(ref.current);
+    }, []);
+
+    return (
+      <div
+        ref={ref}
+        className={`transition-all duration-1000 ${
+          show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        {children}
+      </div>
+    );
+  };
+
   return (
     <main className="container mx-auto px-4 py-16 space-y-16">
-      
+
       {/* Hero Section */}
       <RevealOnScroll>
         <div className="text-center mb-12">
@@ -28,8 +54,6 @@ export default function VirtualAssistancePage() {
       {/* Section 1 */}
       <RevealOnScroll>
         <div className="flex flex-col lg:flex-row items-center gap-12">
-          
-          {/* Text */}
           <div className="lg:w-1/2">
             <h2 className="text-3xl font-bold text-white mb-4">
               Comprehensive Administrative Support
@@ -39,7 +63,6 @@ export default function VirtualAssistancePage() {
               schedules and appointments to handling email correspondence and data entry.
               We keep your operations organized and efficient.
             </p>
-
             <Link href="/contact">
               <span className="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-500 cursor-pointer">
                 Get Started
@@ -47,7 +70,6 @@ export default function VirtualAssistancePage() {
             </Link>
           </div>
 
-          {/* Image */}
           <div className="lg:w-1/2 relative min-h-[350px]">
             <div className="absolute top-0 left-0 w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 -rotate-3"></div>
             <div className="absolute bottom-0 right-0 w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 rotate-3">
@@ -67,8 +89,6 @@ export default function VirtualAssistancePage() {
       {/* Section 2 */}
       <RevealOnScroll>
         <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
-          
-          {/* Text */}
           <div className="lg:w-1/2">
             <h2 className="text-3xl font-bold text-white mb-4">
               Personalized Executive Assistance
@@ -77,7 +97,6 @@ export default function VirtualAssistancePage() {
               Get high-level support for your executive tasks. Our VAs assist with travel,
               reports, presentations, and managing commitments—boosting your productivity.
             </p>
-
             <Link href="/contact">
               <span className="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 cursor-pointer">
                 Book a VA
@@ -85,7 +104,6 @@ export default function VirtualAssistancePage() {
             </Link>
           </div>
 
-          {/* Image */}
           <div className="lg:w-1/2 relative min-h-[350px]">
             <div className="absolute top-0 right-0 w-5/6 h-5/6 bg-blue-500 rounded-xl z-0 rotate-3"></div>
             <div className="absolute bottom-0 left-0 w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 -rotate-3">
@@ -101,7 +119,7 @@ export default function VirtualAssistancePage() {
           </div>
         </div>
       </RevealOnScroll>
-      
+
     </main>
   );
 }
