@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import RevealOnScroll from "../components/RevealOnScroll";
 
 const termsData = [
   {
@@ -32,24 +31,22 @@ const termsData = [
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-black text-gray-300">
+    <div className="min-h-screen bg-black text-gray-300 font-sans">
       <main className="container mx-auto px-4 py-12">
-        <RevealOnScroll>
-          <h1 className="text-4xl font-extrabold text-purple-400 mb-12 text-center">
-            Terms and Conditions
-          </h1>
+        <h1 className="text-4xl font-extrabold text-purple-400 mb-12 text-center">
+          Terms and Conditions
+        </h1>
 
-          <div className="space-y-10">
-            {termsData.map((term, index) => (
-              <section key={index}>
-                <h3 className="text-2xl font-bold text-purple-400 mb-3">
-                  {index + 1}. {term.title}
-                </h3>
-                <p className="leading-relaxed">{term.content}</p>
-              </section>
-            ))}
-          </div>
-        </RevealOnScroll>
+        <div className="space-y-10">
+          {termsData.map((term, index) => (
+            <section key={index}>
+              <h3 className="text-2xl font-bold text-purple-400 mb-3">
+                {index + 1}. {term.title}
+              </h3>
+              <p className="leading-relaxed">{term.content}</p>
+            </section>
+          ))}
+        </div>
       </main>
     </div>
   );
