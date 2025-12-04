@@ -1,22 +1,8 @@
 // /app/layout.js
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-// --- Fonts ---
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 // --- Header ---
 const Header = () => {
@@ -25,7 +11,6 @@ const Header = () => {
   return (
     <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
       <div className="container mx-auto flex justify-between items-center p-4">
-        
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 text-purple-400">
           <Image
@@ -35,52 +20,22 @@ const Header = () => {
             height={56}
             className="rounded-full"
           />
-          <span className="text-2xl font-extrabold text-white">
-            Virtual Switch
-          </span>
+          <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="text-gray-300 hover:text-purple-400 transition-colors">Home</Link>
-          <Link href="/services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</Link>
-          <Link href="/about" className="text-gray-300 hover:text-purple-400 transition-colors">About</Link>
-          <Link href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</Link>
-          <Link href="/join" className="text-gray-300 hover:text-purple-400 transition-colors">Opportunities</Link>
-        </div>
-
-        {/* Right Section */}
-        <div className="hidden lg:flex flex-col items-end">
-          <div>
-            <span className="text-sm text-gray-400">Toll Free</span>
-            <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
-          </div>
-          <div className="flex space-x-4 mt-2 text-gray-400">
-
-            {/* External Links — rewritten using Link + span */}
-            <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <span className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></span>
-            </Link>
-
-            <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <span className="hover:text-purple-400"><i className="fab fa-instagram"></i></span>
-            </Link>
-
-            <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              <span className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></span>
-            </Link>
-
-            <Link href="https://google.com" target="_blank" rel="noopener noreferrer">
-              <span className="hover:text-purple-400"><i className="fab fa-google"></i></span>
-            </Link>
-
-          </div>
+          <Link href="/" className="text-gray-300 hover:text-purple-400">Home</Link>
+          <Link href="/services" className="text-gray-300 hover:text-purple-400">Services</Link>
+          <Link href="/about" className="text-gray-300 hover:text-purple-400">About</Link>
+          <Link href="/contact" className="text-gray-300 hover:text-purple-400">Contact</Link>
+          <Link href="/join" className="text-gray-300 hover:text-purple-400">Opportunities</Link>
         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none">
-            <i className="fas fa-bars text-2xl"></i>
+            <span className="text-2xl">&#9776;</span>
           </button>
         </div>
       </div>
@@ -137,57 +92,33 @@ const Footer = () => {
     { href: "/terms", label: "Terms" },
   ];
 
-  const externalLinks = [
-    { href: "https://facebook.com", icon: "fab fa-facebook-f" },
-    { href: "https://instagram.com", icon: "fab fa-instagram" },
-    { href: "https://linkedin.com", icon: "fab fa-linkedin-in" },
-    { href: "https://google.com", icon: "fab fa-google" },
-  ];
-
   return (
     <RevealOnScroll>
       <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16 text-left">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          <div>
+            <Image
+              src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS"
+              alt="VS Logo"
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+            <p className="text-sm mt-2 max-w-xs">
+              Your industry experts, specializing in seamless management of outsourcing needs.
+            </p>
+          </div>
 
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <Image
-                  src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS"
-                  alt="VS Logo"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                />
-                <span className="text-xl font-bold text-white">Virtual Switch</span>
-              </div>
-              <p className="text-sm max-w-xs mb-4">
-                Your industry experts, specializing in seamless management of outsourcing needs.
-              </p>
-              <div className="flex space-x-4">
-                {externalLinks.map((link, i) => (
-                  <Link key={i} href={link.href} target="_blank" rel="noopener noreferrer">
-                    <span className="hover:text-white"><i className={link.icon}></i></span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-white mb-4">Quick Links</h4>
-              {internalLinks.map((link, i) => (
-                <Link key={i} href={link.href}>
-                  <span className="block text-sm py-1 cursor-pointer hover:text-white">
-                    {link.label}
-                  </span>
-                </Link>
-              ))}
-            </div>
-
+          <div className="flex flex-wrap gap-6">
+            {internalLinks.map((link, i) => (
+              <Link key={i} href={link.href} className="text-sm hover:text-white">
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
 
-        <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">
+        <p className="text-center text-sm mt-8 border-t border-gray-800 pt-4">
           © 2025 Virtual Switch, Inc. All rights reserved.
         </p>
       </footer>
@@ -199,7 +130,7 @@ const Footer = () => {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="font-sans antialiased bg-black text-gray-300">
         <Header />
         {children}
         <Footer />
