@@ -6,14 +6,12 @@ import Image from "next/image";
 import Script from "next/script";
 
 export default function JoinPage() {
-  // Refs & state (keeps your original logic)
   const formRef = useRef(null);
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("No file chosen");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Change this to your actual Apps Script / endpoint
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbwFAjpwV9tuP7_6hoGgbDvlpQnXohmZQ-ZqBvrKRwmYttj-x-1AMLGmOJ_jMwzHT-qi/exec";
 
@@ -38,7 +36,6 @@ export default function JoinPage() {
         return;
       }
 
-      // Read file as data URL (keeps your original approach)
       const fileDataUrl = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (ev) => resolve(ev.target.result);
@@ -46,28 +43,19 @@ export default function JoinPage() {
         reader.readAsDataURL(resumeFile);
       });
 
-      // Gather form values
       const formData = new FormData(formRef.current);
       const formObject = Object.fromEntries(formData.entries());
-
-      // Attach file data
       formObject.resumeFile = fileDataUrl;
       formObject.resumeName = resumeFile.name;
 
-      // Optional: include reCAPTCHA token if you verify server side (site currently uses visible widget)
-      // If you used grecaptcha.execute(...) you'd add token here.
-
       const res = await fetch(SCRIPT_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formObject),
       });
 
       const data = await res.json().catch(() => null);
 
-      // Keep same result handling as original
       if (data && data.result === "success") {
         setMessage("Application submitted successfully!");
         formRef.current.reset();
@@ -75,12 +63,9 @@ export default function JoinPage() {
         if (typeof window !== "undefined" && window.grecaptcha) {
           try {
             window.grecaptcha.reset();
-          } catch (e) {
-            // ignore
-          }
+          } catch {}
         }
       } else {
-        // If server didn't return JSON or returned error
         const errMsg =
           (data && data.message) ||
           `Unexpected response from server (status ${res.status}).`;
@@ -93,11 +78,9 @@ export default function JoinPage() {
     }
   };
 
-  // UI (single page). Styles preserved but moved inline/global as before.
   return (
     <div className="min-h-screen">
-      {/* Load external CSS/fonts/scripts */}
-      {/* Font Awesome + Google Fonts (link tags are safe to include in client component; they get injected into head) */}
+      {/* Fonts & Scripts */}
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -107,13 +90,12 @@ export default function JoinPage() {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
       />
-
-      {/* Load reCAPTCHA script via next/script so we don't mutate the DOM manually */}
       <Script
         src="https://www.google.com/recaptcha/api.js"
         strategy="afterInteractive"
       />
 
+      {/* Global Styles */}
       <style jsx global>{`
         body {
           font-family: "Inter", sans-serif;
@@ -121,7 +103,6 @@ export default function JoinPage() {
           color: #f3f4f6;
           overflow-x: hidden;
         }
-
         body::before {
           content: "";
           position: fixed;
@@ -142,7 +123,6 @@ export default function JoinPage() {
             );
           animation: move-gradient 20s ease-in-out infinite;
         }
-
         @keyframes move-gradient {
           0%,
           100% {
@@ -179,7 +159,6 @@ export default function JoinPage() {
           border-radius: 0.5rem;
           padding: 0.75rem;
           color: #fff;
-          transition: border-color 0.3s, box-shadow 0.3s;
         }
         .form-input:focus {
           outline: none;
@@ -197,16 +176,12 @@ export default function JoinPage() {
           font-weight: 700;
           padding: 0.75rem 1.5rem;
           border-radius: 0.5rem;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -2px rgba(0, 0, 0, 0.05);
-          transition: background-color 0.3s;
           border: none;
+          cursor: pointer;
         }
         .get-started-btn:hover {
           background-color: #f3f4f6;
         }
-
-        /* A few container helpers so the component looks like your previous layout */
         .container {
           max-width: 1100px;
           margin-left: auto;
@@ -221,7 +196,7 @@ export default function JoinPage() {
         }
       `}</style>
 
-      {/* Header (simplified but functionally identical) */}
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
         <div className="container flex items-center justify-between py-4">
           <Link href="/" className="flex items-center gap-3">
@@ -231,13 +206,12 @@ export default function JoinPage() {
               width={56}
               height={56}
               className="rounded-full"
-              unoptimized={true}
+              unoptimized
             />
             <span className="text-2xl font-extrabold text-white">
               Virtual Switch
             </span>
           </Link>
-
           <nav className="hidden md:flex gap-6 text-gray-300">
             <Link href="/" className="hover:text-purple-400">
               Home
@@ -258,19 +232,18 @@ export default function JoinPage() {
         </div>
       </header>
 
-      {/* Main form */}
+      {/* Form */}
       <main className="container py-12">
         <section className="form-section mx-auto">
           <div className="text-center mb-8">
             <h2 className="section-title">Join Our Team</h2>
             <p className="text-gray-300 mt-2">
-              We're always looking for talented individuals to join our growing
-              team. If you're passionate about what you do, we'd love to hear
-              from you.
+              We're always looking for talented individuals to join our team.
             </p>
           </div>
 
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
+            {/* Career Section */}
             <div>
               <h3 className="form-subtitle">Career</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -286,7 +259,6 @@ export default function JoinPage() {
                     <option>Graphic Designer</option>
                   </select>
                 </div>
-
                 <div>
                   <label htmlFor="resume" className="form-label">
                     Resume <span className="text-red-500">*</span>
@@ -294,7 +266,7 @@ export default function JoinPage() {
                   <div className="flex items-center">
                     <label
                       htmlFor="resume"
-                      className="cursor-pointer bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition-colors"
+                      className="cursor-pointer bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md"
                     >
                       Choose File
                     </label>
@@ -310,7 +282,6 @@ export default function JoinPage() {
                     <span className="ml-4 text-gray-400">{fileName}</span>
                   </div>
                 </div>
-
                 <div className="md:col-span-2">
                   <label htmlFor="qualification" className="form-label">
                     Highest Qualification <span className="text-red-500">*</span>
@@ -326,12 +297,13 @@ export default function JoinPage() {
               </div>
             </div>
 
+            {/* Personal Data Section */}
             <div>
               <h3 className="form-subtitle">Personal Data</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <label htmlFor="full-name" className="form-label">
-                    Full name <span className="text-red-500">*</span>
+                    Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -341,7 +313,6 @@ export default function JoinPage() {
                     required
                   />
                 </div>
-
                 <div>
                   <label htmlFor="email" className="form-label">
                     Email <span className="text-red-500">*</span>
@@ -354,10 +325,9 @@ export default function JoinPage() {
                     required
                   />
                 </div>
-
                 <div>
                   <label htmlFor="dob" className="form-label">
-                    Date of birth <span className="text-red-500">*</span>
+                    Date of Birth <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
@@ -367,7 +337,6 @@ export default function JoinPage() {
                     required
                   />
                 </div>
-
                 <div className="md:col-span-2">
                   <label htmlFor="address" className="form-label">
                     Address <span className="text-red-500">*</span>
@@ -380,7 +349,6 @@ export default function JoinPage() {
                     required
                   />
                 </div>
-
                 <div>
                   <label htmlFor="city" className="form-label">
                     City <span className="text-red-500">*</span>
@@ -393,7 +361,6 @@ export default function JoinPage() {
                     required
                   />
                 </div>
-
                 <div>
                   <label htmlFor="state" className="form-label">
                     State / Province / Region <span className="text-red-500">*</span>
@@ -409,6 +376,7 @@ export default function JoinPage() {
               </div>
             </div>
 
+            {/* Experience Section */}
             <div>
               <h3 className="form-subtitle">Experience</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -423,7 +391,6 @@ export default function JoinPage() {
                     className="form-input"
                   />
                 </div>
-
                 <div className="md:col-span-2">
                   <label htmlFor="reason-to-leave" className="form-label">
                     Reason to Leave
@@ -438,6 +405,7 @@ export default function JoinPage() {
               </div>
             </div>
 
+            {/* Declaration + reCAPTCHA */}
             <div className="space-y-4 text-center">
               <div className="flex items-center justify-center">
                 <input
@@ -451,15 +419,12 @@ export default function JoinPage() {
                   I declare that the information provided is true and correct.
                 </label>
               </div>
-
-              {/* reCAPTCHA widget - site key is your testing key (kept as original) */}
               <div className="flex justify-center my-4">
                 <div
                   className="g-recaptcha"
                   data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                 />
               </div>
-
               <button
                 type="submit"
                 className="get-started-btn"
@@ -482,7 +447,7 @@ export default function JoinPage() {
         </section>
       </main>
 
-      {/* Footer (keeps content & icons) */}
+      {/* Footer */}
       <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
         <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
@@ -493,48 +458,29 @@ export default function JoinPage() {
                 width={48}
                 height={48}
                 className="rounded-full"
-                unoptimized={true}
+                unoptimized
               />
               <span className="text-xl font-bold text-white">Virtual Switch</span>
             </div>
             <p className="text-sm">
-              Your industry experts, specializing in seamless management of
-              outsourcing needs, propelling your business towards success.
+              Your industry experts, specializing in seamless management of outsourcing needs.
             </p>
             <div className="flex space-x-4 mt-4">
-              <a href="#" className="hover:text-white">
-                <i className="fab fa-facebook-f" />
-              </a>
-              <a href="#" className="hover:text-white">
-                <i className="fab fa-instagram" />
-              </a>
-              <a href="#" className="hover:text-white">
-                <i className="fab fa-linkedin-in" />
-              </a>
-              <a href="#" className="hover:text-white">
-                <i className="fab fa-skype" />
-              </a>
+              <a href="#" className="hover:text-white"><i className="fab fa-facebook-f" /></a>
+              <a href="#" className="hover:text-white"><i className="fab fa-instagram" /></a>
+              <a href="#" className="hover:text-white"><i className="fab fa-linkedin-in" /></a>
+              <a href="#" className="hover:text-white"><i className="fab fa-skype" /></a>
             </div>
           </div>
 
           <div>
             <h4 className="font-bold text-white mb-4">Services</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:text-white">Vector Artwork</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">Embroidery Digitizing</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">Digital Image Editing</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">Data Processing</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">Web App Development</a>
-              </li>
+              <li><a href="#" className="hover:text-white">Vector Artwork</a></li>
+              <li><a href="#" className="hover:text-white">Embroidery Digitizing</a></li>
+              <li><a href="#" className="hover:text-white">Digital Image Editing</a></li>
+              <li><a href="#" className="hover:text-white">Data Processing</a></li>
+              <li><a href="#" className="hover:text-white">Web App Development</a></li>
             </ul>
           </div>
 
@@ -543,8 +489,8 @@ export default function JoinPage() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/">Home</Link></li>
               <li><Link href="/services">Services</Link></li>
-              <li><a href="#" className="hover:text-white">About</a></li>
-              <li><a href="#" className="hover:text-white">Contact</a></li>
+              <li><Link href="/about">About</Link></li>
+              <li><Link href="/contact">Contact</Link></li>
             </ul>
           </div>
 
