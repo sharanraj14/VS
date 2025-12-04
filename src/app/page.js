@@ -12,14 +12,14 @@ const testimonials = [
 ];
 
 const services = [
-    { icon: 'fas fa-edit', title: 'CRM Management', description: 'Unlock the Power of Vector Art with Our Studio! From overdue tasks to urgent needs, our expert artists are at your service.' },
-    { icon: 'fas fa-paint-brush', title: 'Embroidery Digitizing', description: 'Elevate Your Embroidery Game! Trust our skilled team for top-tier Embroidery Digitizing. We are masters of the craft.' },
-    { icon: 'fas fa-image', title: 'Digital Image Editing', description: 'Transform Your Visuals with Precision! Elevate your brand with our tailored Digital Image Editing services for web and print perfection.' },
-    { icon: 'fas fa-tools', title: 'Custom Services', description: 'Have a unique project in mind? Our team is flexible and ready to create custom solutions to fit your needs.' },
-    { icon: 'fas fa-cogs', title: 'Web Development', description: 'We build modern, responsive, and high-performance websites and web applications from front-end to back-end.' },
-    { icon: 'fab fa-wordpress', title: 'WordPress Solutions', description: 'Leverage the power of WordPress with our comprehensive solutions, including custom theme and plugin development.' },
-    { icon: 'fas fa-database', title: 'Data Processing', description: 'Efficient and accurate data processing services to help you manage, organize, and utilize your valuable information.' },
-    { icon: 'fas fa-user-tie', title: 'Virtual Assistant', description: 'Our professional virtual assistants can handle your administrative tasks, allowing you to focus on growing your business.' }
+    { icon: 'fas fa-users-cog', title: 'CRM Management', description: 'Centralize customer data, automate sales funnels, and build stronger client relationships with our expert CRM management.', link: '/crm' },
+    { icon: 'fas fa-share-alt', title: 'Social Media Management', description: 'Engage your audience, build your brand, and drive growth with strategic social media campaigns and content creation.', link: '/smm' },
+    { icon: 'fas fa-headset', title: 'Virtual Assistance', description: 'Delegate your administrative tasks to a dedicated professional so you can reclaim your time and focus on core business goals.', link: '/va' },
+    { icon: 'fas fa-clipboard-list', title: 'Administrative Support', description: 'From scheduling and email management to data entry and organization, we provide reliable support to keep your operations running smoothly.', link: '/admin-support' },
+    { icon: 'fas fa-search-dollar', title: 'SEO & WEB Development', description: 'Boost your online visibility and attract more customers with our SEO strategies and high-performance website development.', link: '/seo-web-dev' },
+    { icon: 'fas fa-bullhorn', title: 'Google ads', description: 'Maximize your ROI with targeted Google Ads campaigns managed by our certified experts to drive traffic and generate leads.', link: '/google-ads' },
+    { icon: 'fas fa-palette', title: 'Graphic designing', description: 'Bring your brand to life with stunning visuals, from logos and branding to marketing materials and web graphics.', link: '/graphic-design' },
+    { icon: 'fas fa-video', title: 'Video editing', description: 'Transform your raw footage into polished, engaging videos that captivate your audience and tell your story effectively.', link: '/video-editing' }
 ];
 
 // --- Main Components ---
@@ -30,16 +30,16 @@ const Header = () => {
     return (
         <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
             <div className="container mx-auto flex justify-between items-center p-4">
-                <a href="#" className="flex items-center gap-3 text-purple-400">
+                <a href="/" className="flex items-center gap-3 text-purple-400">
                     <img src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" alt="VS Logo" className="h-14 w-14 rounded-full" />
                     <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
                 </a>
                 <div className="hidden md:flex items-center gap-8">
-                    <a href="#" className="text-gray-300 hover:text-purple-400 transition-colors">Home</a>
-                    <a href="./services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</a>
-                    <a href="#" className="text-gray-300 hover:text-purple-400 transition-colors">About</a>
-                    <a href="#" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</a>
-                    <a href="./join" className="text-gray-300 hover:text-purple-400 transition-colors">Opportunities</a>
+                    <a href="/" className="text-purple-400 transition-colors">Home</a>
+                    <a href="/services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</a>
+                    <a href="/about" className="text-gray-300 hover:text-purple-400 transition-colors">About</a>
+                    <a href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</a>
+                    <a href="/join" className="text-gray-300 hover:text-purple-400 transition-colors">Opportunities</a>
                 </div>
                 <div className="hidden lg:flex flex-col items-end">
                     <div>
@@ -47,10 +47,10 @@ const Header = () => {
                         <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
                     </div>
                     <div className="flex space-x-4 mt-2 text-gray-400">
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-instagram"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-google"></i></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></a>
+                        <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-google"></i></a>
                     </div>
                 </div>
                 <div className="md:hidden">
@@ -61,11 +61,11 @@ const Header = () => {
             </div>
             {isMenuOpen && (
                 <div className="md:hidden bg-gray-900 bg-opacity-90">
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Home</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Services</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">About</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Contact</a>
-                    <a href="#" className="block py-3 px-4 text-sm hover:bg-gray-700">Opportunities</a>
+                    <a href="/" className="block py-3 px-4 text-sm hover:bg-gray-700">Home</a>
+                    <a href="/services" className="block py-3 px-4 text-sm hover:bg-gray-700">Services</a>
+                    <a href="/about" className="block py-3 px-4 text-sm hover:bg-gray-700">About</a>
+                    <a href="/contact" className="block py-3 px-4 text-sm hover:bg-gray-700">Contact</a>
+                    <a href="/join" className="block py-3 px-4 text-sm hover:bg-gray-700">Opportunities</a>
                 </div>
             )}
         </nav>
@@ -75,10 +75,21 @@ const Header = () => {
 const HeroCarousel = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slides = [
-        { type: 'image', src: 'https://placehold.co/1920x1080/1A1A1A/FFFFFF?text=Modern+Solutions' },
-        { type: 'image', src: 'https://placehold.co/1920x1080/1A1A1A/C084FC?text=Creative+Designs' },
-        { type: 'text', content: 'Unlock New Opportunities With Us Today.' },
-        { type: 'text', content: 'Explore Our Services to See What We Can Do.' }
+        { 
+            bg: 'https://placehold.co/1920x1080/1A1A1A/FFFFFF?text=Modern+Solutions',
+            title: 'Modern Solutions for a Digital World',
+            subtitle: 'We provide the tools and talent to help you succeed.'
+        },
+        { 
+            bg: 'https://placehold.co/1920x1080/1A1A1A/C084FC?text=Creative+Designs',
+            title: 'Creative Designs, Powerful Results',
+            subtitle: 'From concept to creation, we bring your vision to life.'
+        },
+        { 
+            bg: 'https://placehold.co/1920x1080/1A1A1A/3B82F6?text=Global+Talent',
+            title: 'Unlock a World of Talent',
+            subtitle: 'Access a global network of skilled professionals ready to help you grow.'
+        }
     ];
 
     const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -91,18 +102,16 @@ const HeroCarousel = () => {
 
     return (
         <header className="relative text-white py-8 text-center">
-            <div className="relative w-full h-[75vh] mx-auto overflow-hidden bg-black rounded-xl border border-gray-800 hover:shadow-2xl hover:shadow-purple-500/20 transition-shadow duration-300">
-                <div className="flex h-full transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                    {slides.map((slide, index) => (
-                        <div key={index} className="min-w-full h-full flex justify-center items-center p-6">
-                            {slide.type === 'image' ? (
-                                <img src={slide.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-                            ) : (
-                                <h1 className="text-4xl sm:text-6xl font-extrabold max-w-3xl">{slide.content}</h1>
-                            )}
+            <div className="relative w-full h-[75vh] mx-auto overflow-hidden bg-black rounded-xl border border-gray-800">
+                {slides.map((slide, index) => (
+                    <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
+                        <img src={slide.bg} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-6">
+                            <h1 className={`text-4xl sm:text-6xl font-extrabold max-w-3xl transition-transform duration-1000 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>{slide.title}</h1>
+                            <p className={`text-lg text-gray-300 mt-4 max-w-2xl transition-transform duration-1000 delay-200 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>{slide.subtitle}</p>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
                 <button onClick={prevSlide} className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-10"><i className="fas fa-chevron-left"></i></button>
                 <button onClick={nextSlide} className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-10"><i className="fas fa-chevron-right"></i></button>
             </div>
@@ -110,9 +119,6 @@ const HeroCarousel = () => {
                 {slides.map((_, index) => (
                     <button key={index} onClick={() => setCurrentSlide(index)} className={`h-3 w-3 mx-1 rounded-full ${currentSlide === index ? 'bg-white' : 'bg-gray-500'}`}></button>
                 ))}
-            </div>
-            <div className="mt-8">
-                <button className="bg-white text-purple-600 font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-gray-200 transition-colors">Get Started</button>
             </div>
         </header>
     );
@@ -211,8 +217,8 @@ const Services = () => (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {services.map((service, index) => (
                         <div key={index} className="bg-transparent p-6 rounded-lg border border-gray-800 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300">
-                            <a href="#">
-                                <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4">
+                            <a href={service.link}>
+                                <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4 transition-transform hover:scale-110">
                                     <i className={`${service.icon} text-white text-2xl`}></i>
                                 </div>
                                 <h4 className="text-xl font-bold text-white mb-2">{service.title}</h4>
@@ -228,47 +234,51 @@ const Services = () => (
 
 const Footer = () => (
     <RevealOnScroll>
-        <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
-                <div>
-                    <div className="flex items-center gap-3 mb-4">
-                        <img src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" alt="VS Logo" className="h-12 w-12 rounded-full" />
-                        <span className="text-xl font-bold text-white">Virtual Switch</span>
+       <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
+            <div className="max-w-7xl mx-auto px-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16 text-left">
+                    <div>
+                         <div className="flex items-center gap-3 mb-4">
+                            <img src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" alt="VS Logo" className="h-12 w-12 rounded-full" />
+                            <span className="text-xl font-bold text-white">Virtual Switch</span>
+                        </div>
                     </div>
-                    <p className="text-sm">Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.</p>
-                    <div className="flex space-x-4 mt-4">
-                        <a href="#" className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="hover:text-white"><i className="fab fa-instagram"></i></a>
-                        <a href="#" className="hover:text-white"><i className="fab fa-linkedin-in"></i></a>
-                        <a href="#" className="hover:text-white"><i className="fab fa-skype"></i></a>
+                    <div>
+                        <p className="text-sm max-w-xs mb-4">Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.</p>
+                         <div className="flex space-x-4">
+                            <a href="#" className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
+                            <a href="#" className="hover:text-white"><i className="fab fa-instagram"></i></a>
+                            <a href="#" className="hover:text-white"><i className="fab fa-linkedin-in"></i></a>
+                            <a href="#" className="hover:text-white"><i className="fab fa-skype"></i></a>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h4 className="font-bold text-white mb-4">Services</h4>
-                    <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-white">Vector Artwork</a></li>
-                        <li><a href="#" className="hover:text-white">Embroidery Digitizing</a></li>
-                        <li><a href="#" className="hover:text-white">Digital Image Editing</a></li>
-                        <li><a href="#" className="hover:text-white">Data Processing</a></li>
-                        <li><a href="#" className="hover:text-white">Web App Development</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 className="font-bold text-white mb-4">Quick Links</h4>
-                    <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-white">Home</a></li>
-                        <li><a href="#" className="hover:text-white">Services</a></li>
-                        <li><a href="#" className="hover:text-white">About</a></li>
-                        <li><a href="#" className="hover:text-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 className="font-bold text-white mb-4">Legal</h4>
-                    <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-white">Claim</a></li>
-                        <li><a href="#" className="hover:text-white">Privacy</a></li>
-                        <li><a href="#" className="hover:text-white">Terms</a></li>
-                    </ul>
+                    <div>
+                        <h4 className="font-bold text-white mb-4">Services</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="/crm" className="hover:text-white">CRM Management</a></li>
+                            <li><a href="/smm" className="hover:text-white">Social Media Management</a></li>
+                            <li><a href="/va" className="hover:text-white">Virtual Assistance</a></li>
+                            <li><a href="#" className="hover:text-white">Digital Image Editing</a></li>
+                            <li><a href="#" className="hover:text-white">Web App Development</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-white mb-4">Quick Links</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="/" className="hover:text-white">Home</a></li>
+                            <li><a href="/services" className="hover:text-white">Services</a></li>
+                            <li><a href="/about" className="hover:text-white">About</a></li>
+                            <li><a href="/contact" className="hover:text-white">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-white mb-4">Legal</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="/claim" className="hover:text-white">Claim</a></li>
+                            <li><a href="/policy" className="hover:text-white">Privacy</a></li>
+                            <li><a href="/terms" className="hover:text-white">Terms</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">© 2025 Virtual Switch, Inc. All rights reserved.</p>
