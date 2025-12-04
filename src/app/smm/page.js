@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Head from "next/head";
 
 // ---------------- RevealOnScroll ----------------
 const RevealOnScroll = ({ children }) => {
@@ -15,9 +14,9 @@ const RevealOnScroll = ({ children }) => {
       ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.1 }
     );
-    const current = ref.current;
-    if (current) observer.observe(current);
-    return () => current && observer.unobserve(current);
+
+    if (ref.current) observer.observe(ref.current);
+    return () => ref.current && observer.unobserve(ref.current);
   }, []);
 
   return (
@@ -52,8 +51,9 @@ const Header = () => {
           <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
         </Link>
 
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
-          {["Home","Services","About","Contact","Opportunities"].map((link) => (
+          {["Home", "Services", "About", "Contact", "Opportunities"].map((link) => (
             <Link
               key={link}
               href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
@@ -64,36 +64,40 @@ const Header = () => {
           ))}
         </div>
 
+        {/* Social + Phone */}
         <div className="hidden lg:flex flex-col items-end">
           <div>
             <span className="text-sm text-gray-400">Toll Free</span>
             <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
           </div>
           <div className="flex space-x-4 mt-2 text-gray-400">
-            {["facebook","instagram","linkedin","google"].map((platform) => (
-              <a
-                key={platform}
-                href={`https://${platform}.com`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-purple-400"
-              >
-                <i className={`fab fa-${platform}${platform==="google"?"":"-in"}`}></i>
-              </a>
-            ))}
+            <a href="https://facebook.com" target="_blank" className="hover:text-purple-400">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" className="hover:text-purple-400">
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a href="https://linkedin.com" target="_blank" className="hover:text-purple-400">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://google.com" target="_blank" className="hover:text-purple-400">
+              <i className="fab fa-google"></i>
+            </a>
           </div>
         </div>
 
+        {/* Mobile Menu Toggle */}
         <div className="md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
             <i className="fas fa-bars text-2xl"></i>
           </button>
         </div>
       </div>
 
+      {/* Mobile Dropdown */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900 bg-opacity-90">
-          {["Home","Services","About","Contact","Opportunities"].map((link) => (
+          {["Home", "Services", "About", "Contact", "Opportunities"].map((link) => (
             <Link
               key={link}
               href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
@@ -116,6 +120,7 @@ const Footer = () => {
     <RevealOnScroll>
       <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16">
+          {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Image
@@ -133,36 +138,56 @@ const Footer = () => {
             </p>
           </div>
 
+          {/* Services */}
           <div>
             <h4 className="font-bold text-white mb-4">Services</h4>
             <ul className="space-y-2 text-sm">
-              {["CRM Management","Social Media Management","Virtual Assistance","Digital Image Editing","Web App Development"].map((service) => (
+              {[
+                "CRM Management",
+                "Social Media Management",
+                "Virtual Assistance",
+                "Digital Image Editing",
+                "Web App Development",
+              ].map((service) => (
                 <li key={service}>
-                  <a href="#" onClick={(e)=>e.preventDefault()} className="hover:text-white">{service}</a>
+                  <a href="#" className="hover:text-white">{service}</a>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Quick Links */}
           <div>
             <h4 className="font-bold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              {["Home","Services","About","Contact"].map((link) => (
-                <Link key={link} href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`} className="hover:text-white">{link}</Link>
+              {["Home", "Services", "About", "Contact"].map((link) => (
+                <Link
+                  key={link}
+                  href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
+                  className="hover:text-white"
+                >
+                  {link}
+                </Link>
               ))}
             </ul>
           </div>
 
+          {/* Legal */}
           <div>
             <h4 className="font-bold text-white mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
-              {["Claim","Privacy","Terms"].map((link) => (
-                <Link key={link} href={`/${link.toLowerCase()}`} className="hover:text-white">{link}</Link>
+              {["Claim", "Privacy", "Terms"].map((link) => (
+                <Link key={link} href={`/${link.toLowerCase()}`} className="hover:text-white">
+                  {link}
+                </Link>
               ))}
             </ul>
           </div>
         </div>
-        <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">© 2025 Virtual Switch, Inc. All rights reserved.</p>
+
+        <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">
+          © 2025 Virtual Switch, Inc. All rights reserved.
+        </p>
       </footer>
     </RevealOnScroll>
   );
@@ -176,9 +201,19 @@ const ServiceSection = ({ title, text, imageSrc, reverse = false }) => (
         <h2 className="text-3xl font-bold text-white mb-4">{title}</h2>
         <p className="text-gray-400 leading-relaxed">{text}</p>
       </div>
+
       <div className="lg:w-1/2 relative min-h-[350px]">
-        <div className={`absolute w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 ${reverse ? "top-0 right-0 rotate-3" : "top-0 left-0 -rotate-3"}`}></div>
-        <div className={`absolute w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 ${reverse ? "bottom-0 left-0 -rotate-3" : "bottom-0 right-0 rotate-3"}`}>
+        <div
+          className={`absolute w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 ${
+            reverse ? "top-0 right-0 rotate-3" : "top-0 left-0 -rotate-3"
+          }`}
+        ></div>
+
+        <div
+          className={`absolute w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 ${
+            reverse ? "bottom-0 left-0 -rotate-3" : "bottom-0 right-0 rotate-3"
+          }`}
+        >
           <Image
             src={imageSrc}
             alt={title}
@@ -197,12 +232,7 @@ const ServiceSection = ({ title, text, imageSrc, reverse = false }) => (
 export default function SocialMediaServicePage() {
   return (
     <div className="min-h-screen relative">
-      <Head>
-        <title>Virtual Switch - Social Media Management</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
-      </Head>
-
+      {/* Global Visual Styles */}
       <style jsx global>{`
         body {
           font-family: 'Inter', sans-serif;
@@ -227,6 +257,16 @@ export default function SocialMediaServicePage() {
           100% { background-position: 0% 50%, 100% 50%, 50% 0%; }
         }
       `}</style>
+
+      {/* External Fonts */}
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+        rel="stylesheet"
+      />
 
       <Header />
 
