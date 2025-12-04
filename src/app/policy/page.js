@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 
 // -------- Header --------
-
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -79,28 +79,16 @@ const Header = () => {
           <Link href="/" className="block py-3 px-4 text-sm hover:bg-gray-700">
             Home
           </Link>
-          <Link
-            href="/services"
-            className="block py-3 px-4 text-sm hover:bg-gray-700"
-          >
+          <Link href="/services" className="block py-3 px-4 text-sm hover:bg-gray-700">
             Services
           </Link>
-          <Link
-            href="/about"
-            className="block py-3 px-4 text-sm hover:bg-gray-700"
-          >
+          <Link href="/about" className="block py-3 px-4 text-sm hover:bg-gray-700">
             About
           </Link>
-          <Link
-            href="/contact"
-            className="block py-3 px-4 text-sm hover:bg-gray-700"
-          >
+          <Link href="/contact" className="block py-3 px-4 text-sm hover:bg-gray-700">
             Contact
           </Link>
-          <Link
-            href="/join"
-            className="block py-3 px-4 text-sm hover:bg-gray-700"
-          >
+          <Link href="/join" className="block py-3 px-4 text-sm hover:bg-gray-700">
             Opportunities
           </Link>
         </div>
@@ -110,7 +98,6 @@ const Header = () => {
 };
 
 // -------- Reveal Animation --------
-
 const RevealOnScroll = ({ children }) => {
   const ref = useRef(null);
   const [show, setShow] = useState(false);
@@ -123,7 +110,9 @@ const RevealOnScroll = ({ children }) => {
 
     if (ref.current) observer.observe(ref.current);
 
-    return () => observer.disconnect();
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
   }, []);
 
   return (
@@ -139,7 +128,6 @@ const RevealOnScroll = ({ children }) => {
 };
 
 // -------- Footer --------
-
 const Footer = () => (
   <RevealOnScroll>
     <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
@@ -219,23 +207,33 @@ const Footer = () => (
   </RevealOnScroll>
 );
 
+// -------- Policy Page --------
 export default function PolicyPage() {
   return (
-    <div className="min-h-screen">
-
-      {/* Global CSS for Next.js */}
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      />
+    <div className="min-h-screen bg-black text-white">
+      <Head>
+        <title>Policy | Virtual Switch</title>
+        <meta name="description" content="Virtual Switch Policy Page" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
 
       <Header />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-16">
         <RevealOnScroll>
-          <h1 className="text-4xl font-extrabold text-purple-400 text-center mb-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-purple-400 text-center mb-10">
             Policy
           </h1>
+          <p className="max-w-3xl mx-auto text-gray-300 text-center leading-relaxed">
+            Welcome to our Policy page. Here, we explain our privacy practices, user guidelines, and legal terms to ensure transparency and trust.
+          </p>
         </RevealOnScroll>
       </main>
 
