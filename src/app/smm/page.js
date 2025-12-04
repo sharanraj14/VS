@@ -1,28 +1,23 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 
-// --- Reusable Components ---
-
+// ---------------- RevealOnScroll ----------------
 const RevealOnScroll = ({ children }) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
+      ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.1 }
     );
-
-    const currentRef = ref.current;
-    if (currentRef) observer.observe(currentRef);
-
-    return () => {
-      if (currentRef) observer.unobserve(currentRef);
-    };
+    const current = ref.current;
+    if (current) observer.observe(current);
+    return () => current && observer.unobserve(current);
   }, []);
 
   return (
@@ -37,13 +32,10 @@ const RevealOnScroll = ({ children }) => {
   );
 };
 
+// ---------------- Header ----------------
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const logoSize = 56;
-
-  const handlePlaceholderClick = (e) => {
-    if (e.currentTarget.getAttribute("href") === "#") e.preventDefault();
-  };
 
   return (
     <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
@@ -57,27 +49,19 @@ const Header = () => {
             className="h-14 w-14 rounded-full"
             unoptimized
           />
-          <span className="text-2xl font-extrabold text-white">
-            Virtual Switch
-          </span>
+          <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="text-gray-300 hover:text-purple-400 transition-colors">
-            Home
-          </Link>
-          <Link href="/services" className="text-gray-300 hover:text-purple-400 transition-colors">
-            Services
-          </Link>
-          <Link href="/about" className="text-gray-300 hover:text-purple-400 transition-colors">
-            About
-          </Link>
-          <Link href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors">
-            Contact
-          </Link>
-          <Link href="/join" className="text-gray-300 hover:text-purple-400 transition-colors">
-            Opportunities
-          </Link>
+          {["Home","Services","About","Contact","Opportunities"].map((link) => (
+            <Link
+              key={link}
+              href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
+              className="text-gray-300 hover:text-purple-400 transition-colors"
+            >
+              {link}
+            </Link>
+          ))}
         </div>
 
         <div className="hidden lg:flex flex-col items-end">
@@ -86,10 +70,17 @@ const Header = () => {
             <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
           </div>
           <div className="flex space-x-4 mt-2 text-gray-400">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-instagram"></i></a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></a>
-            <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-google"></i></a>
+            {["facebook","instagram","linkedin","google"].map((platform) => (
+              <a
+                key={platform}
+                href={`https://${platform}.com`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-purple-400"
+              >
+                <i className={`fab fa-${platform}${platform==="google"?"":"-in"}`}></i>
+              </a>
+            ))}
           </div>
         </div>
 
@@ -102,80 +93,73 @@ const Header = () => {
 
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900 bg-opacity-90">
-          <Link href="/" className="block py-3 px-4 text-sm hover:bg-gray-700">Home</Link>
-          <Link href="/services" className="block py-3 px-4 text-sm hover:bg-gray-700">Services</Link>
-          <Link href="/about" className="block py-3 px-4 text-sm hover:bg-gray-700">About</Link>
-          <Link href="/contact" className="block py-3 px-4 text-sm hover:bg-gray-700">Contact</Link>
-          <Link href="/join" className="block py-3 px-4 text-sm hover:bg-gray-700">Opportunities</Link>
+          {["Home","Services","About","Contact","Opportunities"].map((link) => (
+            <Link
+              key={link}
+              href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
+              className="block py-3 px-4 text-sm hover:bg-gray-700"
+            >
+              {link}
+            </Link>
+          ))}
         </div>
       )}
     </nav>
   );
 };
 
+// ---------------- Footer ----------------
 const Footer = () => {
   const logoSize = 48;
-  const handlePlaceholderClick = (e) => {
-    if (e.currentTarget.getAttribute("href") === "#") e.preventDefault();
-  };
 
   return (
     <RevealOnScroll>
       <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16 text-left">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <Image
-                  src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS"
-                  alt="VS Logo"
-                  width={logoSize}
-                  height={logoSize}
-                  className="h-12 w-12 rounded-full"
-                  unoptimized
-                />
-                <span className="text-xl font-bold text-white">Virtual Switch</span>
-              </div>
-              <p className="text-sm max-w-xs mb-4">
-                Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.
-              </p>
-              <div className="flex space-x-4">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-instagram"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-linkedin-in"></i></a>
-                <a href="https://skype.com" target="_blank" rel="noopener noreferrer" className="hover:text-white"><i className="fab fa-skype"></i></a>
-              </div>
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <Image
+                src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS"
+                alt="VS Logo"
+                width={logoSize}
+                height={logoSize}
+                className="h-12 w-12 rounded-full"
+                unoptimized
+              />
+              <span className="text-xl font-bold text-white">Virtual Switch</span>
             </div>
+            <p className="text-sm max-w-xs mb-4">
+              Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.
+            </p>
+          </div>
 
-            <div>
-              <h4 className="font-bold text-white mb-4">Services</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/crm" className="hover:text-white">CRM Management</Link></li>
-                <li><Link href="/smm" className="hover:text-white">Social Media Management</Link></li>
-                <li><Link href="/va" className="hover:text-white">Virtual Assistance</Link></li>
-                <li><a href="#" onClick={handlePlaceholderClick} className="hover:text-white">Digital Image Editing</a></li>
-                <li><a href="#" onClick={handlePlaceholderClick} className="hover:text-white">Web App Development</a></li>
-              </ul>
-            </div>
+          <div>
+            <h4 className="font-bold text-white mb-4">Services</h4>
+            <ul className="space-y-2 text-sm">
+              {["CRM Management","Social Media Management","Virtual Assistance","Digital Image Editing","Web App Development"].map((service) => (
+                <li key={service}>
+                  <a href="#" onClick={(e)=>e.preventDefault()} className="hover:text-white">{service}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div>
-              <h4 className="font-bold text-white mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/" className="hover:text-white">Home</Link></li>
-                <li><Link href="/services" className="hover:text-white">Services</Link></li>
-                <li><Link href="/about" className="hover:text-white">About</Link></li>
-                <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
-              </ul>
-            </div>
+          <div>
+            <h4 className="font-bold text-white mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-sm">
+              {["Home","Services","About","Contact"].map((link) => (
+                <Link key={link} href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`} className="hover:text-white">{link}</Link>
+              ))}
+            </ul>
+          </div>
 
-            <div>
-              <h4 className="font-bold text-white mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/claim" className="hover:text-white">Claim</Link></li>
-                <li><Link href="/policy" className="hover:text-white">Privacy</Link></li>
-                <li><Link href="/terms" className="hover:text-white">Terms</Link></li>
-              </ul>
-            </div>
+          <div>
+            <h4 className="font-bold text-white mb-4">Legal</h4>
+            <ul className="space-y-2 text-sm">
+              {["Claim","Privacy","Terms"].map((link) => (
+                <Link key={link} href={`/${link.toLowerCase()}`} className="hover:text-white">{link}</Link>
+              ))}
+            </ul>
           </div>
         </div>
         <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">© 2025 Virtual Switch, Inc. All rights reserved.</p>
@@ -184,37 +168,59 @@ const Footer = () => {
   );
 };
 
-// --- Social Media Page ---
+// ---------------- ServiceSection ----------------
+const ServiceSection = ({ title, text, imageSrc, reverse = false }) => (
+  <RevealOnScroll>
+    <section className={`flex flex-col lg:flex-row items-center gap-12 ${reverse ? "lg:flex-row-reverse" : ""}`}>
+      <div className="lg:w-1/2">
+        <h2 className="text-3xl font-bold text-white mb-4">{title}</h2>
+        <p className="text-gray-400 leading-relaxed">{text}</p>
+      </div>
+      <div className="lg:w-1/2 relative min-h-[350px]">
+        <div className={`absolute w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 ${reverse ? "top-0 right-0 rotate-3" : "top-0 left-0 -rotate-3"}`}></div>
+        <div className={`absolute w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 ${reverse ? "bottom-0 left-0 -rotate-3" : "bottom-0 right-0 rotate-3"}`}>
+          <Image
+            src={imageSrc}
+            alt={title}
+            width={600}
+            height={400}
+            className="w-full h-full object-cover rounded-lg"
+            unoptimized
+          />
+        </div>
+      </div>
+    </section>
+  </RevealOnScroll>
+);
 
-export default function SocialMediaPage() {
-  const imageWidth = 600;
-  const imageHeight = 400;
-
+// ---------------- SocialMediaServicePage ----------------
+export default function SocialMediaServicePage() {
   return (
-    <div className="min-h-screen">
-      <style jsx global>{`
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    <div className="min-h-screen relative">
+      <Head>
+        <title>Virtual Switch - Social Media Management</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+      </Head>
 
+      <style jsx global>{`
         body {
           font-family: 'Inter', sans-serif;
           background-color: #0a0a0a;
           color: #f3f4f6;
           overflow-x: hidden;
         }
-
         body::before {
           content: '';
           position: fixed;
           top: 0; left: 0;
           width: 100%; height: 100%;
           z-index: -1;
-          background: radial-gradient(at 75% 0%, rgba(200, 0, 160, 0.3) 0%, transparent 50%), 
-                      radial-gradient(at 0% 100%, rgba(100, 0, 200, 0.3) 0%, transparent 50%),
-                      radial-gradient(at 100% 100%, rgba(200, 0, 160, 0.3) 0%, transparent 50%);
+          background: radial-gradient(at 75% 0%, rgba(200,0,160,0.3) 0%, transparent 50%), 
+                      radial-gradient(at 0% 100%, rgba(100,0,200,0.3) 0%, transparent 50%), 
+                      radial-gradient(at 100% 100%, rgba(200,0,160,0.3) 0%, transparent 50%);
           animation: move-gradient 40s ease-in-out infinite;
         }
-
         @keyframes move-gradient {
           0% { background-position: 0% 50%, 100% 50%, 50% 0%; }
           50% { background-position: 100% 50%, 0% 50%, 50% 100%; }
@@ -236,53 +242,18 @@ export default function SocialMediaPage() {
           </div>
         </RevealOnScroll>
 
-        <RevealOnScroll>
-          <section className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <h2 className="text-3xl font-bold text-white mb-4">Strategic Content Creation</h2>
-              <p className="text-gray-400 leading-relaxed">
-                We develop a tailored content strategy that resonates with your target audience. From creating engaging posts and eye-catching graphics to planning your monthly content calendar, we ensure your brand&apos;s voice is consistent and compelling across all platforms.
-              </p>
-            </div>
-            <div className="lg:w-1/2 relative min-h-[350px]">
-              <div className="absolute top-0 left-0 w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 transform -rotate-3"></div>
-              <div className="absolute bottom-0 right-0 w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 transform rotate-3">
-                <Image
-                  src="https://placehold.co/600x400/1E293B/FFFFFF?text=Content+Strategy"
-                  alt="Social Media Content Strategy"
-                  width={imageWidth}
-                  height={imageHeight}
-                  className="w-full h-full object-cover rounded-lg"
-                  unoptimized
-                />
-              </div>
-            </div>
-          </section>
-        </RevealOnScroll>
+        <ServiceSection
+          title="Strategic Content Creation"
+          text="We develop a tailored content strategy that resonates with your target audience. From creating engaging posts and eye-catching graphics to planning your monthly content calendar, we ensure your brand's voice is consistent and compelling across all platforms."
+          imageSrc="https://placehold.co/600x400/1E293B/FFFFFF?text=Content+Strategy"
+        />
 
-        <RevealOnScroll>
-          <section className="flex flex-col lg:flex-row-reverse items-center gap-12">
-            <div className="lg:w-1/2">
-              <h2 className="text-3xl font-bold text-white mb-4">Community Engagement & Growth</h2>
-              <p className="text-gray-400 leading-relaxed">
-                Building a community is key to social media success. We actively engage with your followers, respond to comments and messages, and run targeted campaigns to grow your audience. We turn followers into loyal customers and brand advocates.
-              </p>
-            </div>
-            <div className="lg:w-1/2 relative min-h-[350px]">
-              <div className="absolute top-0 right-0 w-5/6 h-5/6 bg-blue-500 rounded-xl z-0 transform rotate-3"></div>
-              <div className="absolute bottom-0 left-0 w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 transform -rotate-3">
-                <Image
-                  src="https://placehold.co/600x400/1E293B/FFFFFF?text=Community+Engagement"
-                  alt="Community Engagement"
-                  width={imageWidth}
-                  height={imageHeight}
-                  className="w-full h-full object-cover rounded-lg"
-                  unoptimized
-                />
-              </div>
-            </div>
-          </section>
-        </RevealOnScroll>
+        <ServiceSection
+          title="Community Engagement & Growth"
+          text="Building a community is key to social media success. We actively engage with your followers, respond to comments and messages, and run targeted campaigns to grow your audience. We turn followers into loyal customers and brand advocates."
+          imageSrc="https://placehold.co/600x400/1E293B/FFFFFF?text=Community+Engagement"
+          reverse
+        />
       </main>
 
       <Footer />
