@@ -2,8 +2,6 @@
 
 import React from "react";
 import RevealOnScroll from "../components/RevealOnScroll";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 const termsData = [
   {
@@ -35,28 +33,24 @@ const termsData = [
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-black text-gray-300">
-      <Header />
-
       <main className="container mx-auto px-4 py-12">
         <RevealOnScroll>
           <h1 className="text-4xl font-extrabold text-purple-400 mb-12 text-center">
             Terms and Conditions
           </h1>
 
-          <div className="space-y-8 policy-content">
-            {termsData.map(({ title, content }, idx) => (
-              <section key={idx}>
-                <h3 className="text-2xl font-bold text-purple-400 mb-2">
-                  {idx + 1}. {title}
+          <div className="space-y-10">
+            {termsData.map((term, index) => (
+              <section key={index}>
+                <h3 className="text-2xl font-bold text-purple-400 mb-3">
+                  {index + 1}. {term.title}
                 </h3>
-                <p className="leading-relaxed">{content}</p>
+                <p className="leading-relaxed">{term.content}</p>
               </section>
             ))}
           </div>
         </RevealOnScroll>
       </main>
-
-      <Footer />
     </div>
   );
 }
