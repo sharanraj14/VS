@@ -57,8 +57,6 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-8">
           <Link href="/" className="text-gray-300 hover:text-purple-400">Home</Link>
           <Link href="/services" className="text-gray-300 hover:text-purple-400">Services</Link>
-          <Link href="/about" className="text-gray-300 hover:text-purple-400">About</Link>
-          <Link href="/contact" className="text-gray-300 hover:text-purple-400">Contact</Link>
           <Link href="/join" className="text-gray-300 hover:text-purple-400">Opportunities</Link>
         </div>
 
@@ -74,8 +72,8 @@ const Header = () => {
         <div className="md:hidden bg-gray-900 bg-opacity-90">
           <Link href="/" className="block py-3 px-4 hover:bg-gray-700">Home</Link>
           <Link href="/services" className="block py-3 px-4 hover:bg-gray-700">Services</Link>
-          <Link href="/about" className="block py-3 px-4 hover:bg-gray-700">About</Link>
-          <Link href="/contact" className="block py-3 px-4 hover:bg-gray-700">Contact</Link>
+          <Link href="/" className="block py-3 px-4 hover:bg-gray-700">About</Link>
+          <Link href="/" className="block py-3 px-4 hover:bg-gray-700">Contact</Link>
           <Link href="/join" className="block py-3 px-4 hover:bg-gray-700">Opportunities</Link>
         </div>
       )}
