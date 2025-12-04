@@ -50,7 +50,7 @@ const Header = () => {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          {["Home", "Services", "About", "Contact", "Opportunities"].map(
+          {["Home", "Services", "Join"].map(
             (item) => (
               <Link
                 key={item}
@@ -76,7 +76,7 @@ const Header = () => {
 
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900 bg-opacity-90">
-          {["Home", "Services", "About", "Contact", "Opportunities"].map(
+          {["Home", "Services", "join"].map(
             (item) => (
               <Link
                 key={item}
