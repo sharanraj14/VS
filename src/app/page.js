@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGoogle, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGoogle, FaChevronLeft } from "react-icons/fa";
 
 // ---------------- RevealOnScroll ----------------
 const RevealOnScroll = ({ children }) => {
@@ -43,11 +43,10 @@ const Header = () => {
     { icon: FaGoogle, href: "https://google.com" },
   ];
 
+  // Only include existing pages
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
     { name: "Opportunities", href: "/join" },
   ];
 
@@ -141,7 +140,7 @@ const Footer = () => {
 
           <div>
             <h4 className="font-bold text-white mb-4">Quick Links</h4>
-            {["/", "/services", "/about", "/contact"].map((l, i) => (
+            {["/", "/services", "/join"].map((l, i) => (
               <Link key={i} href={l}>
                 <span className="block text-sm py-1 cursor-pointer hover:text-white">{l.replace("/", "").toUpperCase() || "HOME"}</span>
               </Link>
