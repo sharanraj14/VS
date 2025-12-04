@@ -1,237 +1,213 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
 
-// --- Reusable Components ---
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 
+// ---------------- HEADER ----------------
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    return (
-        <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
-            <div className="container mx-auto flex justify-between items-center p-4">
-                <a href="/" className="flex items-center gap-3 text-purple-400">
-                    <img src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" alt="VS Logo" className="h-14 w-14 rounded-full" />
-                    <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
-                </a>
-                <div className="hidden md:flex items-center gap-8">
-                    <a href="/" className="text-gray-300 hover:text-purple-400 transition-colors">Home</a>
-                    <a href="/services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</a>
-                    <a href="/about" className="text-gray-300 hover:text-purple-400 transition-colors">About</a>
-                    <a href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</a>
-                    <a href="/join" className="text-gray-300 hover:text-purple-400 transition-colors">Opportunities</a>
-                </div>
-                <div className="hidden lg:flex flex-col items-end">
-                    <div>
-                        <span className="text-sm text-gray-400">Toll Free</span>
-                        <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
-                    </div>
-                    <div className="flex space-x-4 mt-2 text-gray-400">
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-instagram"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></a>
-                        <a href="#" className="hover:text-purple-400"><i className="fab fa-google"></i></a>
-                    </div>
-                </div>
-                <div className="md:hidden">
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none">
-                        <i className="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-            {isMenuOpen && (
-                <div className="md:hidden bg-gray-900 bg-opacity-90">
-                    <a href="/" className="block py-3 px-4 text-sm hover:bg-gray-700">Home</a>
-                    <a href="/services" className="block py-3 px-4 text-sm hover:bg-gray-700">Services</a>
-                    <a href="/about" className="block py-3 px-4 text-sm hover:bg-gray-700">About</a>
-                    <a href="/contact" className="block py-3 px-4 text-sm hover:bg-gray-700">Contact</a>
-                    <a href="/join" className="block py-3 px-4 text-sm hover:bg-gray-700">Opportunities</a>
-                </div>
-            )}
-        </nav>
-    );
-};
+  return (
+    <nav className="sticky top-0 z-50 bg-black/60 backdrop-blur-md border-b border-gray-800">
+      <div className="container mx-auto flex justify-between items-center p-4">
 
-const RevealOnScroll = ({ children }) => {
-    const ref = useRef(null);
-    const [isVisible, setIsVisible] = useState(false);
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 text-purple-400">
+          <Image
+            src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS"
+            alt="VS Logo"
+            width={56}
+            height={56}
+            className="rounded-full"
+          />
+          <span className="text-2xl font-extrabold text-white">
+            Virtual Switch
+          </span>
+        </Link>
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                setIsVisible(true);
-            } else {
-                setIsVisible(false);
-            }
-        }, { threshold: 0.1 });
-
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
-
-        return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
-            }
-        };
-    }, []);
-
-    return (
-        <div ref={ref} className={`transition-opacity duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {children}
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-8">
+          {["Home", "Services", "About", "Contact", "Opportunities"].map(
+            (item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
+                className="text-gray-300 hover:text-purple-400 transition"
+              >
+                {item}
+              </Link>
+            )
+          )}
         </div>
-    );
+
+        {/* Right Section */}
+        <div className="hidden lg:flex flex-col items-end">
+          <div className="flex items-center gap-3 text-sm">
+            <span className="text-gray-400">Toll Free</span>
+            <span className="font-bold text-purple-400">+1 (800) 259-1090</span>
+          </div>
+
+          <div className="flex space-x-4 mt-2 text-gray-400">
+            <Link href="#" className="hover:text-purple-400"><Facebook size={18} /></Link>
+            <Link href="#" className="hover:text-purple-400"><Instagram size={18} /></Link>
+            <Link href="#" className="hover:text-purple-400"><Linkedin size={18} /></Link>
+            <Link href="#" className="hover:text-purple-400"><Mail size={18} /></Link>
+          </div>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden text-white"
+        >
+          <svg width="28" height="28" fill="none" stroke="currentColor">
+            <path strokeWidth="2" d="M4 7h20M4 14h20M4 21h20" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-gray-900 border-t border-gray-800">
+          {["Home", "Services", "About", "Contact", "Opportunities"].map(
+            (item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
+                className="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 transition"
+              >
+                {item}
+              </Link>
+            )
+          )}
+        </div>
+      )}
+    </nav>
+  );
 };
 
+// ---------------- REVEAL ANIMATION ----------------
+const RevealOnScroll = ({ children }) => {
+  const ref = useRef(null);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => setShow(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    if (ref.current) obs.observe(ref.current);
+
+    return () => ref.current && obs.unobserve(ref.current);
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-1000 ${
+        show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
+      {children}
+    </div>
+  );
+};
+
+// ---------------- FOOTER ----------------
 const Footer = () => (
-    <RevealOnScroll>
-        <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16 text-left">
-                    <div>
-                         <div className="flex items-center gap-3 mb-4">
-                            <img src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" alt="VS Logo" className="h-12 w-12 rounded-full" />
-                            <span className="text-xl font-bold text-white">Virtual Switch</span>
-                        </div>
-                    </div>
-                    <div>
-                        <p className="text-sm max-w-xs mb-4">Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.</p>
-                         <div className="flex space-x-4">
-                            <a href="#" className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
-                            <a href="#" className="hover:text-white"><i className="fab fa-instagram"></i></a>
-                            <a href="#" className="hover:text-white"><i className="fab fa-linkedin-in"></i></a>
-                            <a href="#" className="hover:text-white"><i className="fab fa-skype"></i></a>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-white mb-4">Services</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><a href="/crm" className="hover:text-white">CRM Management</a></li>
-                            <li><a href="/smm" className="hover:text-white">Social Media Management</a></li>
-                            <li><a href="/va" className="hover:text-white">Virtual Assistance</a></li>
-                            <li><a href="#" className="hover:text-white">Digital Image Editing</a></li>
-                            <li><a href="#" className="hover:text-white">Web App Development</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-white mb-4">Quick Links</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><a href="/" className="hover:text-white">Home</a></li>
-                            <li><a href="/services" className="hover:text-white">Services</a></li>
-                            <li><a href="/about" className="hover:text-white">About</a></li>
-                            <li><a href="/contact" className="hover:text-white">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-white mb-4">Legal</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><a href="/claim" className="hover:text-white">Claim</a></li>
-                            <li><a href="/policy" className="hover:text-white">Privacy</a></li>
-                            <li><a href="/terms" className="hover:text-white">Terms</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">© 2025 Virtual Switch, Inc. All rights reserved.</p>
-        </footer>
-    </RevealOnScroll>
+  <RevealOnScroll>
+    <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16">
+
+        {/* Brand */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <Image
+              src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS"
+              alt="Logo"
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+            <span className="text-xl font-bold text-white">Virtual Switch</span>
+          </div>
+        </div>
+
+        {/* About */}
+        <div>
+          <p className="text-sm max-w-xs mb-4">
+            Your industry experts, specializing in management and outsourcing.
+          </p>
+
+          <div className="flex space-x-4">
+            <Link href="#" className="hover:text-white"><Facebook size={18} /></Link>
+            <Link href="#" className="hover:text-white"><Instagram size={18} /></Link>
+            <Link href="#" className="hover:text-white"><Linkedin size={18} /></Link>
+            <Link href="#" className="hover:text-white"><Phone size={18} /></Link>
+          </div>
+        </div>
+
+        {/* Services */}
+        <div>
+          <h4 className="font-bold text-white mb-4">Services</h4>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/crm">CRM Management</Link></li>
+            <li><Link href="/smm">Social Media Management</Link></li>
+            <li><Link href="/va">Virtual Assistance</Link></li>
+            <li><Link href="#">Digital Image Editing</Link></li>
+            <li><Link href="#">Web App Development</Link></li>
+          </ul>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h4 className="font-bold text-white mb-4">Quick Links</h4>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/services">Services</Link></li>
+            <li><Link href="/about">About</Link></li>
+            <li><Link href="/contact">Contact</Link></li>
+          </ul>
+        </div>
+
+        {/* Legal */}
+        <div>
+          <h4 className="font-bold text-white mb-4">Legal</h4>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/claim">Claim</Link></li>
+            <li><Link href="/policy">Privacy</Link></li>
+            <li><Link href="/terms">Terms</Link></li>
+          </ul>
+        </div>
+      </div>
+
+      <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">
+        © 2025 Virtual Switch, Inc. All rights reserved.
+      </p>
+    </footer>
+  </RevealOnScroll>
 );
 
-
+// ---------------- PAGE ----------------
 export default function PolicyPage() {
   return (
-    <div className="min-h-screen">
-      <style jsx="true" global="true">{`
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-        
-        body {
-          font-family: 'Inter', sans-serif;
-          background-color: #0A0A0A;
-          color: #f3f4f6;
-          overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(at 80% 10%, hsla(280, 80%, 50%, 0.2) 0px, transparent 50%), 
-                        radial-gradient(at 20% 90%, hsla(260, 90%, 50%, 0.2) 0px, transparent 50%);
-            animation: move-gradient 20s ease-in-out infinite;
-        }
-
-        @keyframes move-gradient {
-            0%, 100% { background-position: 0% 50%, 100% 50%; }
-            50% { background-position: 100% 50%, 0% 50%; }
-        }
-        
-        .policy-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #c084fc;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        .policy-content ul {
-            list-style-type: disc;
-            padding-left: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .policy-content p {
-            line-height: 1.75;
-        }
-            .section-title {
-            font-size: 2.25rem;
-            font-weight: 900; /* Bolder font weight */
-            color: #c084fc;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-      `}</style>
+    <div className="min-h-screen bg-black text-white">
       <Header />
-      <main className="container mx-auto px-4 py-8">
+
+      <main className="container mx-auto px-4 py-16">
         <RevealOnScroll>
-             <h1 className="section-title">Policy</h1>
-            <div className="policy-content">
-                <h3>Why Does This Program Work for You?</h3>
-                <ul>
-                    <li><strong>Dedicated Customer Success Manager:</strong> You will have a personal account manager to ensure everything runs smoothly and to serve as your primary point of contact.</li>
-                    <li><strong>Flexible Support:</strong> We provide coverage during public holidays and offer a backup resource if your primary VA is unavailable, ensuring continuous support.</li>
-                    <li><strong>Tailored Assistance:</strong> A Virtual Assistant (VA) is specifically assigned to you and your business, chosen for their expertise in your industry and ready to support your unique needs.</li>
-                    <li><strong>2-Month Nesting Period for Success:</strong> The first two months serve as a nesting period where we get to know your business better, refine our approach, and make adjustments based on your feedback.</li>
-                    <li><strong>Virtual Assistant Replacement:</strong> If at any point you feel your VA isn’t the right fit, we offer a free replacement until we find the perfect match for your needs.</li>
-                    <li><strong>Referral Discount:</strong> If you refer a new client to us, you will receive a 5% to 10% discount on your next invoice as a thank you.</li>
-                </ul>
-
-                <h3>Adjustments and Usage Policy</h3>
-                <ul>
-                    <li><strong>Changes to VA Hours or Timings:</strong> Please inform us at least 2 days in advance for minor adjustments.</li>
-                    <li><strong>Adjustments to Resource Hours:</strong> For significant changes, such as altering the overall allocation of hours, kindly notify us 1 week in advance.</li>
-                </ul>
-
-                <h3>Payment Terms</h3>
-                <p>We use a monthly subscription system, with payments due every month. (Weekly payment is also accepted).</p>
-                <ul>
-                    <li>Payment is due no later than the 5th of the following month.</li>
-                    <li>Failure to settle invoices by the specified due dates will result in a 1% late fee per month. Immediate suspension of services will be applicable until all dues are cleared.</li>
-                </ul>
-
-                 <h3>Data Security and Confidentiality</h3>
-                 <p>To ensure the highest standards of data security, clients are required to adhere to the following guidelines:</p>
-                <ul>
-                    <li><strong>Restricted Sharing of Sensitive Information:</strong> Clients must not share sensitive details (e.g., credit card information, banking details, or login credentials) directly with the virtual assistant.</li>
-                    <li><strong>Point of Contact:</strong> All sensitive data must be communicated solely to the designated account manager.</li>
-                    <li><strong>Client Responsibilities:</strong> Clients are responsible for ensuring that any sensitive information shared aligns with this protocol.</li>
-                </ul>
-            </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-purple-400 text-center mb-10">
+            Policy
+          </h1>
+          <p className="max-w-3xl mx-auto text-gray-300 text-center leading-relaxed">
+            Welcome to our Policy page. Here, we explain our privacy practices,
+            user guidelines, and legal terms to ensure transparency and trust.
+          </p>
         </RevealOnScroll>
       </main>
+
       <Footer />
     </div>
   );

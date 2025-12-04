@@ -5,10 +5,21 @@ import { FlatCompat } from "@eslint/eslintrc";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Create a FlatCompat instance to support legacy configs
 const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
+// Extend Next.js core web vitals rules
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals"),
+  {
+    rules: {
+      // Example: customize rules if needed
+      "react/react-in-jsx-scope": "off",
+      "no-console": "warn",
+    },
+  },
+];
 
 export default eslintConfig;
