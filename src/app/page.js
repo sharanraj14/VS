@@ -6,7 +6,6 @@ import Image from 'next/image'; // REQUIRED: For optimized image loading
 // --- Helper Components & Data ---
 
 const testimonials = [
-    // FIX: Apostrophes are handled in the component below, no need to escape here
     { img: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Dr. Aleksandra Gajer', quote: "Wishup's VA has successfully handled a variety of tasks for us, including email marketing and social media management. They have been efficient and productive.", author: 'Dr. Aleksandra Gajer', title: 'Founder - The Giant Practice' },
     { img: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Jason Ellinger', quote: "I realized I was lacking in generating leads. My VA helped manage my calendar, invoices, and HR and is now an integral part of our business.", author: 'Jason Ellinger', title: 'Co-founder - Record & Reverb' },
     { img: 'https://images.pexels.com/photos/3763188/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Jane Doe', quote: "Partnering with Wishup, we've experienced a significant improvement in our overall efficiency. Our VA has freed up our time to focus on our clients.", author: 'Jane Doe', title: 'CEO - Creative Solutions' },
@@ -48,7 +47,7 @@ const Header = () => {
                         width={logoSize} 
                         height={logoSize} 
                         className="h-14 w-14 rounded-full" 
-                        unoptimized={true} // FIX: Added unoptimized for external placeholder image
+                        unoptimized={true} 
                     />
                     <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
                 </Link>
@@ -138,7 +137,7 @@ const HeroCarousel = () => {
                             height={imageHeight}
                             style={{ objectFit: 'cover' }}
                             className="w-full h-full" 
-                            unoptimized={true} // Already present, kept for compliance
+                            unoptimized={true} 
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-6">
                             <h1 className={`text-4xl sm:text-6xl font-extrabold max-w-3xl transition-transform duration-1000 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>{slide.title}</h1>
