@@ -67,8 +67,6 @@ const Header = () => {
         <div className="md:hidden bg-gray-900">
           <Link href="/" className="block py-3 px-4 hover:bg-gray-700">Home</Link>
           <Link href="/services" className="block py-3 px-4 hover:bg-gray-700">Services</Link>
-          <Link href="/about" className="block py-3 px-4 hover:bg-gray-700">About</Link>
-          <Link href="/contact" className="block py-3 px-4 hover:bg-gray-700">Contact</Link>
           <Link href="/join" className="block py-3 px-4 hover:bg-gray-700">Opportunities</Link>
         </div>
       )}
@@ -154,8 +152,6 @@ const Footer = () => (
           <ul className="space-y-2 text-sm">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/services">Services</Link></li>
-            <li><Link href="/about">About</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
           </ul>
         </div>
 
