@@ -34,7 +34,7 @@ export default function SocialIcons() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={item.name}
-          className={`text-gray-400 transition-all duration-300 ${item.hover} 
+          className={`text-gray-400 transition-all duration-300 ${item.hover} transform 
             hover:scale-125 active:scale-95`}
         >
           {item.icon}
