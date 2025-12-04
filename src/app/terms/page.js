@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import RevealOnScroll from "../components/RevealOnScroll";
 import Header from "../components/Header";
@@ -41,10 +42,13 @@ export default function TermsPage() {
           <h1 className="text-4xl font-extrabold text-purple-400 mb-12 text-center">
             Terms and Conditions
           </h1>
+
           <div className="space-y-8 policy-content">
             {termsData.map(({ title, content }, idx) => (
               <section key={idx}>
-                <h3 className="text-2xl font-bold text-purple-400 mb-2">{`${idx + 1}. ${title}`}</h3>
+                <h3 className="text-2xl font-bold text-purple-400 mb-2">
+                  {idx + 1}. {title}
+                </h3>
                 <p className="leading-relaxed">{content}</p>
               </section>
             ))}
