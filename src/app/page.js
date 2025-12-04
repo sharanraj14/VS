@@ -1,444 +1,177 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link'; // REQUIRED: For fast, client-side routing
-import Image from 'next/image'; // REQUIRED: For optimized image loading
+import Link from 'next/link';
+import Image from 'next/image';
 
-// --- Helper Components & Data ---
+// --- HeroCarousel Component ---
+const HeroCarousel = ({ slides }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slideCount = slides.length;
 
-const testimonials = [
-    { img: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Dr. Aleksandra Gajer', quote: "Wishup's VA has successfully handled a variety of tasks for us, including email marketing and social media management. They have been efficient and productive.", author: 'Dr. Aleksandra Gajer', title: 'Founder - The Giant Practice' },
-    { img: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Jason Ellinger', quote: "I realized I was lacking in generating leads. My VA helped manage my calendar, invoices, and HR and is now an integral part of our business.", author: 'Jason Ellinger', title: 'Co-founder - Record & Reverb' },
-    { img: 'https://images.pexels.com/photos/3763188/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Jane Doe', quote: "Partnering with Wishup, we've experienced a significant improvement in our overall efficiency. Our VA has freed up our time to focus on our clients.", author: 'Jane Doe', title: 'CEO - Creative Solutions' },
-    { img: 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'John Smith', quote: "The level of professionalism and dedication is outstanding. Our virtual assistant has become a key part of our team's success and daily workflow.", author: 'John Smith', title: 'Director of Operations' },
-    { img: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Emily White', quote: "I was hesitant about virtual assistants at first, but the experience has been transformative. Our productivity has skyrocketed since we started.", author: 'Emily White', title: 'Marketing Manager' }
-];
+  // Auto slide every 5s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % slideCount);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [slideCount]);
 
-const services = [
-    { icon: 'fas fa-users-cog', title: 'CRM Management', description: 'Centralize customer data, automate sales funnels, and build stronger client relationships with our expert CRM management.', link: '/crm' },
-    { icon: 'fas fa-share-alt', title: 'Social Media Management', description: 'Engage your audience, build your brand, and drive growth with strategic social media campaigns and content creation.', link: '/smm' },
-    { icon: 'fas fa-headset', title: 'Virtual Assistance', description: 'Delegate your administrative tasks to a dedicated professional so you can reclaim your time and focus on core business goals.', link: '/va' },
-    { icon: 'fas fa-clipboard-list', title: 'Administrative Support', description: 'From scheduling and email management to data entry and organization, we provide reliable support to keep your operations running smoothly.', link: '/admin-support' },
-    { icon: 'fas fa-search-dollar', title: 'SEO & WEB Development', description: 'Boost your online visibility and attract more customers with our SEO strategies and high-performance website development.', link: '/seo-web-dev' },
-    { icon: 'fas fa-bullhorn', title: 'Google ads', description: 'Maximize your ROI with targeted Google Ads campaigns managed by our certified experts to drive traffic and generate leads.', link: '/google-ads' },
-    { icon: 'fas fa-palette', title: 'Graphic designing', description: 'Bring your brand to life with stunning visuals, from logos and branding to marketing materials and web graphics.', link: '/graphic-design' },
-    { icon: 'fas fa-video', title: 'Video editing', description: 'Transform your raw footage into polished, engaging videos that captivate your audience and tell your story effectively.', link: '/video-editing' }
-];
+  const prevSlide = () => setCurrentSlide((currentSlide - 1 + slideCount) % slideCount);
+  const nextSlide = () => setCurrentSlide((currentSlide + 1) % slideCount);
 
-// --- Reusable Components (FIXED) ---
-
-const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const logoSize = 56; // Dimensions for h-14 w-14 (56px)
-
-    const handlePlaceholderClick = (e) => {
-        if (e.currentTarget.getAttribute('href') === '#') {
-            e.preventDefault();
-        }
-    };
-
-    return (
-        <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
-            <div className="container mx-auto flex justify-between items-center p-4">
-                {/* FIX: Replaced <a> with <Link> and <img> with <Image> */}
-                <Link href="/" className="flex items-center gap-3 text-purple-400">
-                    <Image 
-                        src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" 
-                        alt="VS Logo" 
-                        width={logoSize} 
-                        height={logoSize} 
-                        className="h-14 w-14 rounded-full" 
-                        unoptimized={true} 
-                    />
-                    <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
-                </Link>
-                <div className="hidden md:flex items-center gap-8">
-                    {/* FIX: Replaced <a> with <Link> */}
-                    <Link href="/" className="text-purple-400 transition-colors">Home</Link>
-                    <Link href="/services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</Link>
-                    <Link href="/about" className="text-gray-300 hover:text-purple-400 transition-colors">About</Link>
-                    <Link href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</Link>
-                    <Link href="/join" className="text-gray-300 hover:text-purple-400 transition-colors">Opportunities</Link>
-                </div>
-                <div className="hidden lg:flex flex-col items-end">
-                    <div>
-                        <span className="text-sm text-gray-400">Toll Free</span>
-                        <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
-                    </div>
-                    <div className="flex space-x-4 mt-2 text-gray-400">
-                        {/* External links: remain <a>, added rel/target */}
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-facebook-f"></i></a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-instagram"></i></a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-linkedin-in"></i></a>
-                        <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400"><i className="fab fa-google"></i></a>
-                    </div>
-                </div>
-                <div className="md:hidden">
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none">
-                        <i className="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
+  return (
+    <header className="relative text-white py-8">
+      <div className="relative w-full h-[75vh] overflow-hidden rounded-xl border border-gray-800">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <Image
+              src={slide.bg}
+              alt={`Slide ${index + 1}`}
+              fill
+              style={{ objectFit: 'cover' }}
+              priority={index === 0} // load first slide immediately
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-6 text-center">
+              <h1 className="text-4xl sm:text-6xl font-extrabold max-w-3xl">{slide.title}</h1>
+              <p className="text-lg text-gray-300 mt-4 max-w-2xl">{slide.subtitle}</p>
             </div>
-            {isMenuOpen && (
-                <div className="md:hidden bg-gray-900 bg-opacity-90">
-                    {/* FIX: Replaced <a> with <Link> */}
-                    <Link href="/" className="block py-3 px-4 text-sm hover:bg-gray-700">Home</Link>
-                    <Link href="/services" className="block py-3 px-4 text-sm hover:bg-gray-700">Services</Link>
-                    <Link href="/about" className="block py-3 px-4 text-sm hover:bg-gray-700">About</Link>
-                    <Link href="/contact" className="block py-3 px-4 text-sm hover:bg-gray-700">Contact</Link>
-                    <Link href="/join" className="block py-3 px-4 text-sm hover:bg-gray-700">Opportunities</Link>
-                </div>
-            )}
-        </nav>
-    );
+          </div>
+        ))}
+        {/* Navigation */}
+        <button
+          onClick={prevSlide}
+          aria-label="Previous Slide"
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 p-3 rounded-full"
+        >
+          <i className="fas fa-chevron-left"></i>
+        </button>
+        <button
+          onClick={nextSlide}
+          aria-label="Next Slide"
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 p-3 rounded-full"
+        >
+          <i className="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div className="flex justify-center mt-4 space-x-2">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            aria-label={`Go to slide ${index + 1}`}
+            onClick={() => setCurrentSlide(index)}
+            className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-white' : 'bg-gray-500'}`}
+          />
+        ))}
+      </div>
+    </header>
+  );
 };
 
-const HeroCarousel = () => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const slides = [
-        { 
-            bg: 'https://placehold.co/1920x1080/1A1A1A/FFFFFF?text=Modern+Solutions',
-            title: 'Modern Solutions for a Digital World',
-            subtitle: 'We provide the tools and talent to help you succeed.'
-        },
-        { 
-            bg: 'https://placehold.co/1920x1080/1A1A1A/C084FC?text=Creative+Designs',
-            title: 'Creative Designs, Powerful Results',
-            subtitle: 'From concept to creation, we bring your vision to life.'
-        },
-        { 
-            bg: 'https://placehold.co/1920x1080/1A1A1A/3B82F6?text=Global+Talent',
-            title: 'Unlock a World of Talent',
-            subtitle: 'Access a global network of skilled professionals ready to help you grow.'
-        }
-    ];
-
-    const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-    const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-
-    useEffect(() => {
-        // FIX: Added nextSlide to dependency array to resolve hook warning
-        const slideInterval = setInterval(nextSlide, 5000);
-        return () => clearInterval(slideInterval);
-    }, [nextSlide]); 
-
-    const imageWidth = 1200;
-    const imageHeight = 600;
-
-    return (
-        <header className="relative text-white py-8 text-center">
-            <div className="relative w-full h-[75vh] mx-auto overflow-hidden bg-black rounded-xl border border-gray-800">
-                {slides.map((slide, index) => (
-                    <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
-                        {/* FIX: Replaced <img> with <Image> */}
-                        <Image 
-                            src={slide.bg} 
-                            alt={`Slide ${index + 1}`} 
-                            width={imageWidth}
-                            height={imageHeight}
-                            style={{ objectFit: 'cover' }}
-                            className="w-full h-full" 
-                            unoptimized={true} 
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-6">
-                            <h1 className={`text-4xl sm:text-6xl font-extrabold max-w-3xl transition-transform duration-1000 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>{slide.title}</h1>
-                            <p className={`text-lg text-gray-300 mt-4 max-w-2xl transition-transform duration-1000 delay-200 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>{slide.subtitle}</p>
-                        </div>
-                    </div>
-                ))}
-                <button onClick={prevSlide} className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-10"><i className="fas fa-chevron-left"></i></button>
-                <button onClick={nextSlide} className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-10"><i className="fas fa-chevron-right"></i></button>
-            </div>
-            <div className="flex justify-center mt-4">
-                {slides.map((_, index) => (
-                    <button key={index} onClick={() => setCurrentSlide(index)} className={`h-3 w-3 mx-1 rounded-full ${currentSlide === index ? 'bg-white' : 'bg-gray-500'}`}></button>
-                ))}
-            </div>
-        </header>
-    );
-};
-
+// --- RevealOnScroll Hook/Component ---
 const RevealOnScroll = ({ children }) => {
-    const ref = useRef(null);
-    const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                setIsVisible(true);
-            } else {
-                setIsVisible(false);
-            }
-        }, { threshold: 0.1 });
-
-        // FIX: Capture ref.current for stable cleanup dependency
-        const currentRef = ref.current; 
-
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, []);
-
-    return (
-        <div ref={ref} className={`transition-opacity duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {children}
-        </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 }
     );
+    if (ref.current) observer.observe(ref.current);
+    return () => ref.current && observer.unobserve(ref.current);
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-opacity duration-1000 transform ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
+      {children}
+    </div>
+  );
 };
 
-const About = () => (
-    <RevealOnScroll>
-        <section className="py-8">
-            <div className="flex flex-col lg:flex-row items-center gap-8 bg-transparent p-8 rounded-xl border border-gray-800 hover:shadow-2xl hover:shadow-purple-500/10 transition-shadow duration-300">
-                <div className="relative w-full max-w-md lg:w-1/2 min-h-[400px]">
-                    <div className="absolute top-0 left-0 w-5/6 h-5/6 bg-purple-800 rounded-xl z-0"></div>
-                    <div className="absolute bottom-0 right-0 w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10">
-                        {/* FIX: Replaced <img> with <Image> */}
-                        <Image 
-                            src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                            alt="Team collaborating" 
-                            width={500} 
-                            height={400} 
-                            style={{ objectFit: 'cover' }}
-                            className="w-full h-full rounded-lg" 
-                            unoptimized={true} // FIX: Added unoptimized for external Pexels image
-                        />
-                    </div>
-                </div>
-                <div className="lg:w-1/2">
-                    <h2 className="text-3xl font-extrabold text-purple-400 mb-4">Our Mission</h2>
-                    <p className="text-gray-300 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <p className="text-gray-300 leading-relaxed mt-4">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                </div>
+// --- Services Component ---
+const Services = ({ services }) => (
+  <RevealOnScroll>
+    <section className="py-12">
+      <div className="text-center mb-12">
+        <h3 className="text-purple-400 font-semibold">What We Do Best</h3>
+        <h2 className="text-3xl font-extrabold text-white">Excellence in Every Service</h2>
+        <p className="text-gray-400 max-w-2xl mx-auto mt-4">
+          We take pride in delivering excellence in every service we offer. From web development to virtual assistance, our teams are committed to your business needs.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {services.map((service, i) => (
+          <Link
+            key={i}
+            href={service.link || '#'}
+            className="bg-transparent p-6 rounded-lg border border-gray-800 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 flex flex-col items-center"
+          >
+            <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4">
+              <i className={`${service.icon} text-white text-2xl`}></i>
             </div>
-        </section>
-    </RevealOnScroll>
+            <h4 className="text-xl font-bold text-white mb-2 text-center">{service.title}</h4>
+            <p className="text-gray-400 text-sm text-center">{service.description}</p>
+          </Link>
+        ))}
+      </div>
+    </section>
+  </RevealOnScroll>
 );
 
-const Testimonials = () => {
-    // Note: Testimonial images are large, use appropriate size based on rendering (w-24, h-24 is 96px)
-    const profileSize = 96; 
-    
-    return (
-        <RevealOnScroll>
-            <section className="py-8">
-                <h2 className="text-3xl font-extrabold text-purple-400 mb-8 text-center">What Life Looks Like With Our VAs</h2>
-                <div className="relative overflow-hidden group">
-                    <div className="flex animate-scroll group-hover:pause">
-                        {[...testimonials, ...testimonials].map((testimonial, index) => (
-                            <div key={index} className="min-w-[335px] p-2">
-                                <div className="bg-transparent rounded-lg h-[420px] border border-gray-800 relative mt-12">
-                                    <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-gray-800 z-10">
-                                        {/* FIX: Replaced <img> with <Image> */}
-                                        <Image 
-                                            src={testimonial.img} 
-                                            alt={testimonial.alt} 
-                                            width={profileSize}
-                                            height={profileSize}
-                                            style={{ objectFit: 'cover' }}
-                                            className="w-full h-full" 
-                                            unoptimized={true} // FIX: Added unoptimized for external Pexels image
-                                        />
-                                    </div>
-                                    <div className="pt-16 p-6 text-center flex flex-col justify-between h-full">
-                                        <i className="fas fa-quote-left text-purple-400 opacity-20 text-2xl absolute top-4 left-4"></i>
-                                        {/* FIX: Used JSX entity &apos; for cleaner escaping */}
-                                        <p className="italic text-gray-300 flex-grow">
-                                            {testimonial.quote.replace(/'/g, '&apos;')}
-                                        </p>
-                                        <div>
-                                            <cite className="font-bold text-white not-italic block">{testimonial.author}</cite>
-                                            <span className="text-sm text-gray-400">{testimonial.title}</span>
-                                        </div>
-                                        <i className="fas fa-quote-right text-purple-400 opacity-20 text-2xl absolute bottom-4 right-4"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+// --- Testimonials Component ---
+const Testimonials = ({ testimonials }) => {
+  const profileSize = 96;
+
+  return (
+    <RevealOnScroll>
+      <section className="py-12">
+        <h2 className="text-3xl font-extrabold text-purple-400 mb-8 text-center">What Life Looks Like With Our VAs</h2>
+        <div className="relative overflow-hidden group">
+          <div
+            className="flex animate-scroll group-hover:pause"
+            style={{ width: `${testimonials.length * 350 * 2}px` }}
+          >
+            {[...testimonials, ...testimonials].map((t, i) => (
+              <div key={i} className="min-w-[335px] p-2">
+                <div className="bg-transparent rounded-lg h-[420px] border border-gray-800 relative mt-12 flex flex-col justify-between text-center p-6">
+                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-gray-800 z-10">
+                    <Image
+                      src={t.img}
+                      alt={t.alt}
+                      width={profileSize}
+                      height={profileSize}
+                      style={{ objectFit: 'cover' }}
+                      className="w-full h-full"
+                      unoptimized={true}
+                      loading="lazy"
+                    />
+                  </div>
+                  <i className="fas fa-quote-left text-purple-400 opacity-20 text-2xl absolute top-4 left-4"></i>
+                  <p className="italic text-gray-300 flex-grow mt-12">{t.quote}</p>
+                  <div className="mt-4">
+                    <cite className="font-bold text-white not-italic block">{t.author}</cite>
+                    <span className="text-sm text-gray-400">{t.title}</span>
+                  </div>
+                  <i className="fas fa-quote-right text-purple-400 opacity-20 text-2xl absolute bottom-4 right-4"></i>
                 </div>
-            </section>
-        </RevealOnScroll>
-    );
-};
-
-const Services = () => {
-    const handlePlaceholderClick = (e) => {
-        if (e.currentTarget.getAttribute('href') === '#') {
-            e.preventDefault();
-        }
-    };
-
-    return (
-        <RevealOnScroll>
-            <section className="py-8">
-                <div className="bg-transparent p-8 rounded-xl border border-gray-800 hover:shadow-2xl hover:shadow-purple-500/10 transition-shadow duration-300">
-                    <div className="text-center mb-8">
-                        <h3 className="text-purple-400 font-semibold">What We Do Best</h3>
-                        <h2 className="text-3xl font-extrabold text-white">Excellence in Every Service</h2>
-                        <p className="text-gray-400 max-w-2xl mx-auto mt-4">We take pride in delivering excellence in every service we offer. From web app development to virtual assistance, our dedicated teams are committed to meeting your unique business needs.</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {services.map((service, index) => (
-                            <div key={index} className="bg-transparent p-6 rounded-lg border border-gray-800 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300">
-                                {/* FIX: Conditional rendering to use <Link> for internal paths and <a> for external/placeholder paths */}
-                                {service.link && service.link.startsWith('/') ? (
-                                    <Link href={service.link}>
-                                        <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4 transition-transform hover:scale-110">
-                                            <i className={`${service.icon} text-white text-2xl`}></i>
-                                        </div>
-                                        <h4 className="text-xl font-bold text-white mb-2">{service.title}</h4>
-                                    </Link>
-                                ) : (
-                                    <a href="#" onClick={handlePlaceholderClick}>
-                                        <div className="bg-purple-600 inline-block p-3 rounded-lg mb-4 transition-transform hover:scale-110">
-                                            <i className={`${service.icon} text-white text-2xl`}></i>
-                                        </div>
-                                        <h4 className="text-xl font-bold text-white mb-2">{service.title}</h4>
-                                    </a>
-                                )}
-                                <p className="text-gray-400 text-sm">{service.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-        </RevealOnScroll>
-    );
-};
-
-const Footer = () => {
-    const logoSize = 48; // Dimensions for h-12 w-12 (48px)
-    
-    const handlePlaceholderClick = (e) => {
-        if (e.currentTarget.getAttribute('href') === '#') {
-            e.preventDefault();
-        }
-    };
-
-    return (
-        <RevealOnScroll>
-           <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16 text-left">
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                {/* FIX: Replaced <img> with <Image> */}
-                                <Image 
-                                    src="https://placehold.co/100x100/C084FC/0A0A0A?text=VS" 
-                                    alt="VS Logo" 
-                                    width={logoSize} 
-                                    height={logoSize} 
-                                    className="h-12 w-12 rounded-full" 
-                                    unoptimized={true} // FIX: Added unoptimized for external placeholder image
-                                />
-                                <span className="text-xl font-bold text-white">Virtual Switch</span>
-                            </div>
-                            <p className="text-sm max-w-xs mb-4">Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.</p>
-                            <div className="flex space-x-4">
-                                <a href="#" onClick={handlePlaceholderClick} className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
-                                <a href="#" onClick={handlePlaceholderClick} className="hover:text-white"><i className="fab fa-instagram"></i></a>
-                                <a href="#" onClick={handlePlaceholderClick} className="hover:text-white"><i className="fab fa-linkedin-in"></i></a>
-                                <a href="#" onClick={handlePlaceholderClick} className="hover:text-white"><i className="fab fa-skype"></i></a>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-white mb-4">Services</h4>
-                            <ul className="space-y-2 text-sm">
-                                {/* FIX: Replaced <a> with <Link> or kept <a> for placeholders */}
-                                <li><Link href="/crm" className="hover:text-white">CRM Management</Link></li>
-                                <li><Link href="/smm" className="hover:text-white">Social Media Management</Link></li>
-                                <li><Link href="/va" className="hover:text-white">Virtual Assistance</Link></li>
-                                <li><a href="#" onClick={handlePlaceholderClick} className="hover:text-white">Digital Image Editing</a></li>
-                                <li><a href="#" onClick={handlePlaceholderClick} className="hover:text-white">Web App Development</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-white mb-4">Quick Links</h4>
-                            <ul className="space-y-2 text-sm">
-                                {/* FIX: Replaced <a> with <Link> */}
-                                <li><Link href="/" className="hover:text-white">Home</Link></li>
-                                <li><Link href="/services" className="hover:text-white">Services</Link></li>
-                                <li><Link href="/about" className="hover:text-white">About</Link></li>
-                                <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-white mb-4">Legal</h4>
-                            <ul className="space-y-2 text-sm">
-                                {/* FIX: Replaced <a> with <Link> */}
-                                <li><Link href="/claim" className="hover:text-white">Claim</Link></li>
-                                <li><Link href="/policy" className="hover:text-white">Privacy</Link></li>
-                                <li><Link href="/terms" className="hover:text-white">Terms</Link></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <p className="text-center text-sm mt-12 border-t border-gray-800 pt-8">© 2025 Virtual Switch, Inc. All rights reserved.</p>
-            </footer>
-        </RevealOnScroll>
-    );
-};
-
-
-export default function App() {
-    return (
-        <div className="min-h-screen">
-            <style jsx="true" global="true">{`
-                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-                
-                body {
-                    font-family: 'Inter', sans-serif;
-                    background-color: #0A0A0A;
-                    color: #f3f4f6;
-                    overflow-x: hidden;
-                }
-
-                body::before {
-                    content: '';
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    z-index: -1;
-                    background: radial-gradient(at 80% 10%, hsla(280, 80%, 50%, 0.2) 0px, transparent 50%), 
-                                 radial-gradient(at 20% 90%, hsla(260, 90%, 50%, 0.2) 0px, transparent 50%);
-                    animation: move-gradient 20s ease-in-out infinite;
-                }
-
-                @keyframes move-gradient {
-                    0%, 100% { background-position: 0% 50%, 100% 50%; }
-                    50% { background-position: 100% 50%, 0% 50%; }
-                }
-                
-                @keyframes scroll {
-                    0% { transform: translateX(0); }
-                    100% { transform: translateX(calc(-335px * 5)); }
-                }
-
-                .animate-scroll {
-                    animation: scroll 20s linear infinite;
-                }
-                
-                .pause:hover {
-                    animation-play-state: paused;
-                }
-            `}</style>
-            <Header />
-            <main className="container mx-auto px-4">
-                <HeroCarousel />
-                <About />
-                <Services />
-                <Testimonials />
-            </main>
-            <Footer />
+              </div>
+            ))}
+          </div>
         </div>
-    );
-}
+      </section>
+    </RevealOnScroll>
+  );
+};
+
+export { HeroCarousel, Services, Testimonials, RevealOnScroll };
