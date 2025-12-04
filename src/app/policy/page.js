@@ -9,6 +9,8 @@ import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const navItems = ["Home", "Services", "Opportunities"];
+
   return (
     <nav className="sticky top-0 z-50 bg-black/60 backdrop-blur-md border-b border-gray-800">
       <div className="container mx-auto flex justify-between items-center p-4">
@@ -22,24 +24,20 @@ const Header = () => {
             height={56}
             className="rounded-full"
           />
-          <span className="text-2xl font-extrabold text-white">
-            Virtual Switch
-          </span>
+          <span className="text-2xl font-extrabold text-white">Virtual Switch</span>
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {["Home", "Services", "About", "Contact", "Opportunities"].map(
-            (item) => (
-              <Link
-                key={item}
-                href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
-                className="text-gray-300 hover:text-purple-400 transition"
-              >
-                {item}
-              </Link>
-            )
-          )}
+          {navItems.map((item) => (
+            <Link
+              key={item}
+              href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
+              className="text-gray-300 hover:text-purple-400 transition"
+            >
+              {item}
+            </Link>
+          ))}
         </div>
 
         {/* Right Section */}
@@ -71,17 +69,15 @@ const Header = () => {
       {/* Mobile Dropdown */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900 border-t border-gray-800">
-          {["Home", "Services", "About", "Contact", "Opportunities"].map(
-            (item) => (
-              <Link
-                key={item}
-                href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
-                className="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 transition"
-              >
-                {item}
-              </Link>
-            )
-          )}
+          {navItems.map((item) => (
+            <Link
+              key={item}
+              href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
+              className="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 transition"
+            >
+              {item}
+            </Link>
+          ))}
         </div>
       )}
     </nav>
@@ -133,42 +129,18 @@ const Footer = () => (
             />
             <span className="text-xl font-bold text-white">Virtual Switch</span>
           </div>
-        </div>
-
-        {/* About */}
-        <div>
           <p className="text-sm max-w-xs mb-4">
             Your industry experts, specializing in management and outsourcing.
           </p>
-
-          <div className="flex space-x-4">
-            <Link href="#" className="hover:text-white"><Facebook size={18} /></Link>
-            <Link href="#" className="hover:text-white"><Instagram size={18} /></Link>
-            <Link href="#" className="hover:text-white"><Linkedin size={18} /></Link>
-            <Link href="#" className="hover:text-white"><Phone size={18} /></Link>
-          </div>
         </div>
 
         {/* Services */}
         <div>
           <h4 className="font-bold text-white mb-4">Services</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/crm">CRM Management</Link></li>
-            <li><Link href="/smm">Social Media Management</Link></li>
-            <li><Link href="/va">Virtual Assistance</Link></li>
-            <li><Link href="#">Digital Image Editing</Link></li>
-            <li><Link href="#">Web App Development</Link></li>
-          </ul>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h4 className="font-bold text-white mb-4">Quick Links</h4>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/services">Services</Link></li>
-            <li><Link href="/about">About</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/crm" className="hover:text-white">CRM Management</Link></li>
+            <li><Link href="/smm" className="hover:text-white">Social Media Management</Link></li>
+            <li><Link href="/va" className="hover:text-white">Virtual Assistance</Link></li>
           </ul>
         </div>
 
@@ -176,9 +148,9 @@ const Footer = () => (
         <div>
           <h4 className="font-bold text-white mb-4">Legal</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/claim">Claim</Link></li>
-            <li><Link href="/policy">Privacy</Link></li>
-            <li><Link href="/terms">Terms</Link></li>
+            <li><Link href="/claim" className="hover:text-white">Claim</Link></li>
+            <li><Link href="/policy" className="hover:text-white">Privacy</Link></li>
+            <li><Link href="/terms" className="hover:text-white">Terms</Link></li>
           </ul>
         </div>
       </div>
