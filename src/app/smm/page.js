@@ -36,6 +36,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const logoSize = 56;
 
+  const navLinks = ["Home", "Services", "Opportunities"];
+
   return (
     <nav className="sticky top-0 z-50 bg-black bg-opacity-50 backdrop-blur-md border-b border-gray-800">
       <div className="container mx-auto flex justify-between items-center p-4">
@@ -53,7 +55,7 @@ const Header = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
-          {["Home", "Services", "About", "Contact", "Opportunities"].map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link}
               href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
@@ -64,32 +66,10 @@ const Header = () => {
           ))}
         </div>
 
-        {/* Social + Phone */}
-        <div className="hidden lg:flex flex-col items-end">
-          <div>
-            <span className="text-sm text-gray-400">Toll Free</span>
-            <span className="font-bold text-purple-400 ml-2">+1(800) 259-1090</span>
-          </div>
-          <div className="flex space-x-4 mt-2 text-gray-400">
-            <a href="https://facebook.com" target="_blank" className="hover:text-purple-400">
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://instagram.com" target="_blank" className="hover:text-purple-400">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="https://linkedin.com" target="_blank" className="hover:text-purple-400">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
-            <a href="https://google.com" target="_blank" className="hover:text-purple-400">
-              <i className="fab fa-google"></i>
-            </a>
-          </div>
-        </div>
-
         {/* Mobile Menu Toggle */}
         <div className="md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
-            <i className="fas fa-bars text-2xl"></i>
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white text-2xl">
+            &#9776;
           </button>
         </div>
       </div>
@@ -97,7 +77,7 @@ const Header = () => {
       {/* Mobile Dropdown */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900 bg-opacity-90">
-          {["Home", "Services", "About", "Contact", "Opportunities"].map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link}
               href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
@@ -115,7 +95,6 @@ const Header = () => {
 // ---------------- Footer ----------------
 const Footer = () => {
   const logoSize = 48;
-
   return (
     <RevealOnScroll>
       <footer className="bg-black text-gray-400 py-12 mt-12 border-t border-gray-800">
@@ -134,33 +113,15 @@ const Footer = () => {
               <span className="text-xl font-bold text-white">Virtual Switch</span>
             </div>
             <p className="text-sm max-w-xs mb-4">
-              Your industry experts, specializing in seamless management of outsourcing needs, propelling your business towards success.
+              Your industry experts, propelling your business towards success.
             </p>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-bold text-white mb-4">Services</h4>
-            <ul className="space-y-2 text-sm">
-              {[
-                "CRM Management",
-                "Social Media Management",
-                "Virtual Assistance",
-                "Digital Image Editing",
-                "Web App Development",
-              ].map((service) => (
-                <li key={service}>
-                  <a href="#" className="hover:text-white">{service}</a>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Quick Links */}
           <div>
             <h4 className="font-bold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              {["Home", "Services", "About", "Contact"].map((link) => (
+              {["Home", "Services", "Opportunities"].map((link) => (
                 <Link
                   key={link}
                   href={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()}`}
@@ -203,17 +164,8 @@ const ServiceSection = ({ title, text, imageSrc, reverse = false }) => (
       </div>
 
       <div className="lg:w-1/2 relative min-h-[350px]">
-        <div
-          className={`absolute w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 ${
-            reverse ? "top-0 right-0 rotate-3" : "top-0 left-0 -rotate-3"
-          }`}
-        ></div>
-
-        <div
-          className={`absolute w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 ${
-            reverse ? "bottom-0 left-0 -rotate-3" : "bottom-0 right-0 rotate-3"
-          }`}
-        >
+        <div className={`absolute w-5/6 h-5/6 bg-purple-600 rounded-xl z-0 ${reverse ? "top-0 right-0 rotate-3" : "top-0 left-0 -rotate-3"}`}></div>
+        <div className={`absolute w-5/6 h-5/6 bg-white p-4 rounded-xl shadow-2xl z-10 ${reverse ? "bottom-0 left-0 -rotate-3" : "bottom-0 right-0 rotate-3"}`}>
           <Image
             src={imageSrc}
             alt={title}
@@ -231,43 +183,7 @@ const ServiceSection = ({ title, text, imageSrc, reverse = false }) => (
 // ---------------- SocialMediaServicePage ----------------
 export default function SocialMediaServicePage() {
   return (
-    <div className="min-h-screen relative">
-      {/* Global Visual Styles */}
-      <style jsx global>{`
-        body {
-          font-family: 'Inter', sans-serif;
-          background-color: #0a0a0a;
-          color: #f3f4f6;
-          overflow-x: hidden;
-        }
-        body::before {
-          content: '';
-          position: fixed;
-          top: 0; left: 0;
-          width: 100%; height: 100%;
-          z-index: -1;
-          background: radial-gradient(at 75% 0%, rgba(200,0,160,0.3) 0%, transparent 50%), 
-                      radial-gradient(at 0% 100%, rgba(100,0,200,0.3) 0%, transparent 50%), 
-                      radial-gradient(at 100% 100%, rgba(200,0,160,0.3) 0%, transparent 50%);
-          animation: move-gradient 40s ease-in-out infinite;
-        }
-        @keyframes move-gradient {
-          0% { background-position: 0% 50%, 100% 50%, 50% 0%; }
-          50% { background-position: 100% 50%, 0% 50%, 50% 100%; }
-          100% { background-position: 0% 50%, 100% 50%, 50% 0%; }
-        }
-      `}</style>
-
-      {/* External Fonts */}
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
-        rel="stylesheet"
-      />
-
+    <div className="min-h-screen relative bg-black text-white">
       <Header />
 
       <main className="container mx-auto px-4 py-16 space-y-16">
